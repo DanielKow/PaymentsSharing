@@ -5,7 +5,25 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle"/>
+        <MudText Typo="Typo.h1">Budget @_month</MudText>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" OpenMiniOnHover="true" ClipMode="DrawerClipMode.Docked" Variant="DrawerVariant.Mini">
+        
+    </MudDrawer>
     <MudMainContent>
         @Body
     </MudMainContent>
 </MudLayout>
+
+@code {
+
+    private bool _drawerOpen;
+    private string _month = DateTime.Now.ToString("MMMM");
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
