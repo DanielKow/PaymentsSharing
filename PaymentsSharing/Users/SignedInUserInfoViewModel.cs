@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace PaymentsSharing.Users;
 
-public class SignedInUserInfoViewModel(NavigationManager navigationManager)
+internal class SignedInUserInfoViewModel(NavigationManager navigationManager)
 {
     public void SignIn()
     {
