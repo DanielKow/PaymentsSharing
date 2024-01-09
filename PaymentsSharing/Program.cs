@@ -9,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddEventStore().AddMudServices();
+builder.Services
+    .AddEventStore()
+    .AddMudServices()
+    .AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly))
+    .AddUsers();
 
 builder.Services.AddScoped<SignedInUserInfoViewModel>();
 

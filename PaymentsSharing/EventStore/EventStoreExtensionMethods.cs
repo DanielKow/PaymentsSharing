@@ -2,7 +2,7 @@ using EventStore.Client;
 
 namespace PaymentsSharing.EventStore;
 
-internal static class EventStoreExtensionsMethods
+internal static class EventStoreExtensionMethods
 {
     public static IServiceCollection AddEventStore(this IServiceCollection services)
     {

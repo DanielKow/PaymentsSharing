@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace PaymentsSharing.Users;
 
-internal record DeleteUser(string Username);
+internal record DeleteUser(string Username) : IRequest;

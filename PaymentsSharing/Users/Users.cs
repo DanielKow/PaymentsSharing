@@ -1,21 +1,35 @@
+using System.Collections;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+
 namespace PaymentsSharing.Users;
 
-internal class Users
+internal class Users : IEnumerable<User>
 {
     private readonly List<User> _users = [];
-    
-    public void Handle(UserCreated userCreated)
-    {
-        _users.Add(new User(userCreated.Username, userCreated.Password, userCreated.IsMeatEater));
-    }
-    
-    public void Handle(UserDeleted userDeleted)
-    {
-        _users.RemoveAll(user => user.Username == userDeleted.Username);
-    }
-    
+
     public IReadOnlyCollection<User> GetAll()
     {
         return _users;
+    }
+
+    public void Add(User user)
+    {
+        _users.Add(user);
+    }
+    
+    public void Remove(User user)
+    {
+        _users.Remove(user);
+    }
+
+    public IEnumerator<User> GetEnumerator()
+    {
+        return _users.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
