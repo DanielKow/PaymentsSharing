@@ -1,5 +1,6 @@
 using MudBlazor.Services;
 using PaymentsSharing.Components;
+using PaymentsSharing.EventStore;
 using PaymentsSharing.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddMudServices();
+builder.Services.AddEventStore().AddMudServices();
 
 builder.Services.AddScoped<SignedInUserInfoViewModel>();
 
