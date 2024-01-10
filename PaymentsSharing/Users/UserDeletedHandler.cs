@@ -2,18 +2,18 @@ using MediatR;
 
 namespace PaymentsSharing.Users;
 
-internal class UserDeletedHandler(Users users) : INotificationHandler<UserDeleted>
+internal class UserDeletedHandler(ExistingUsers existingUsers) : INotificationHandler<UserDeleted>
 {
     public Task Handle(UserDeleted userDeleted, CancellationToken cancellationToken)
     {
-        var user = users.FirstOrDefault(user => user.Username == userDeleted.Username);
+        var user = existingUsers.FirstOrDefault(user => user.Username == userDeleted.Username);
 
         if (user is null)
         {
             return Task.CompletedTask;
         }
         
-        users.Remove(user);
+        existingUsers.Remove(user);
         
         return Task.CompletedTask;
     }

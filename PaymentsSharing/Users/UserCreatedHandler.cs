@@ -2,11 +2,11 @@ using MediatR;
 
 namespace PaymentsSharing.Users;
 
-internal class UserCreatedHandler(Users users) : INotificationHandler<UserCreated>
+internal class UserCreatedHandler(ExistingUsers existingUsers) : INotificationHandler<UserCreated>
 {
     public Task Handle(UserCreated userCreated, CancellationToken cancellationToken)
     {
-        users.Add(new User(userCreated.Username, userCreated.Password, userCreated.IsMeatEater));
+        existingUsers.Add(new User(userCreated.Username, userCreated.Password, userCreated.IsMeatEater));
         return Task.CompletedTask;
     }
 }

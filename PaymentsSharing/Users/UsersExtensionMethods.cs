@@ -4,7 +4,7 @@ internal static class UsersExtensionMethods
 {
     public static IServiceCollection AddUsers(this IServiceCollection services)
     {
-        services.AddSingleton<Users>();
+        services.AddSingleton<ExistingUsers>();
         return services;
     }
 }

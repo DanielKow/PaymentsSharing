@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace PaymentsSharing.Users;
 
-internal class Users : IEnumerable<User>
+internal class ExistingUsers : IEnumerable<User>
 {
     private readonly List<User> _users = [];
 
