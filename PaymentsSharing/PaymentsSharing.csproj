@@ -13,4 +13,9 @@
       <PackageReference Include="MudBlazor" Version="6.12.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Users\SignedInUserInfo.razor" />
+      <_ContentIncludedByDefault Remove="Users\SignInForm.razor" />
+    </ItemGroup>
+
 </Project>

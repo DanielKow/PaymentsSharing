@@ -31,4 +31,9 @@
       <ProjectReference Include="..\PaymentsSharing\PaymentsSharing.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\" />
+      <Folder Include="Steps\" />
+    </ItemGroup>
+
 </Project>
