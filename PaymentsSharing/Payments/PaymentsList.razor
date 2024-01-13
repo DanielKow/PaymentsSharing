@@ -2,8 +2,25 @@
 @inject Payments Payments
 @inject Persons Persons
 
-<h3>PaymentsList</h3>
+<MudText Typo="Typo.h3">
+    Payments
+</MudText>
+
+<MudTable Items="@Payments.All" Hover="true">
+    <HeaderContent>
+        <MudTh>Who paid?</MudTh>
+        <MudTh>How much?</MudTh>
+        <MudTh>When?</MudTh>
+        <MudTh>For what?</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Who paid?">@string.Join(", ", context.Payers)</MudTd>
+        <MudTd DataLabel="How much?">@(context.Amount.ToString("N2") + (context.AmountForMeat?.ToString("N2") ?? ""))</MudTd>
+        <MudTd DataLabel="When?">@context.CreatedAt.ToString("dd.MM.yyyy")</MudTd>
+        <MudTd DataLabel="For what?">@(string.IsNullOrEmpty(context.Description) ? "-" : context.Description)</MudTd>
+    </RowTemplate>
+</MudTable>
 
 @code {
-    
+
 }

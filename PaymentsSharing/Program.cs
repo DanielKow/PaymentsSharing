@@ -2,6 +2,7 @@ using MudBlazor.Services;
 using PaymentsSharing.Components;
 using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
+using PaymentsSharing.Persons;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,8 @@ builder.Services
     .AddEventStore()
     .AddMudServices()
     .AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly))
-    .AddPayments();
+    .AddPayments()
+    .AddPersons();
 
 
 var app = builder.Build();
