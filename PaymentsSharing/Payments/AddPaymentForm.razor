@@ -1,6 +1,31 @@
 @page "/AddPayment"
-<h3>AddPaymentForm</h3>
+@inject AddPaymentFormViewModel ViewModel
+
+<MudStack Spacing="3">
+    <MudText Typo="Typo.h4">Add payment</MudText>
+    <MudForm>
+        <MudNumericField Label="Amount" @bind-Value="ViewModel.Amount"/>
+        <MudNumericField Label="Amount for meat" @bind-Value="ViewModel.AmountForMeat"/>
+        <MudSelect Label="Who paid?" MultiSelection="true" @bind-SelectedValues="ViewModel.Payers" MultiSelectionTextFunc="_ => ViewModel.SelectedPayers">
+            @foreach (var person in ViewModel.AllPersons)
+            {
+                <MudSelectItem Value="@person" Disabled="person == ViewModel.CurrentPerson">@person.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect Label="Who will consume?" MultiSelection="true" @bind-SelectedValues="ViewModel.Consumers" MultiSelectionTextFunc="_ => ViewModel.SelectedConsumers">
+            @foreach (var person in ViewModel.AllPersons)
+            {
+                <MudSelectItem Value="@person">@person.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudNumericField Label="Description" @bind-Value="ViewModel.Description"/>
+    </MudForm>
+    <MudButton OnClick="() => ViewModel.Save()">Save</MudButton>
+</MudStack>
+
+
+
 
 @code {
-    
+
 }
