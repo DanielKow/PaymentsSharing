@@ -1,5 +1,17 @@
 @inject SignedInPersonViewModel ViewModel
 
+@if (ViewModel.IsSignedIn)
+{
+    <MudStack Row="true" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h5">Hello, @ViewModel.Name.</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ViewModel.SignOut()">Sign out</MudButton>
+    </MudStack>
+}
+else
+{
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ViewModel.SignIn()">Sign in</MudButton>
+}
+
 @code {
-    
+
 }

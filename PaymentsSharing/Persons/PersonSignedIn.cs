@@ -2,4 +2,4 @@ using MediatR;
 
 namespace PaymentsSharing.Persons;
 
-internal record PersonSignedIn(Person Person) : INotification;
+internal record PersonSignedIn(string Name) : INotification;

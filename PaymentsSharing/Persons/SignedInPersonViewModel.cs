@@ -4,10 +4,16 @@ namespace PaymentsSharing.Persons;
 
 internal class SignedInPersonViewModel(IPublisher mediator, CurrentPerson currentPerson)
 {
-    public CurrentPerson CurrentPerson { get; } = currentPerson;
+    public bool IsSignedIn => currentPerson.Person is not null;
+    public string Name => currentPerson.Person?.Name ?? string.Empty;
     
-    public void SignIn()
+    public async Task SignIn()
     {
-        mediator.Publish(new PersonSignedIn(new Person("Andrzej", true)));
+        await mediator.Publish(new PersonSignedIn("Andrzej"));
+    }
+
+    public async Task SignOut()
+    {
+        await mediator.Publish(new PersonSignedOut());
     }
 }
