@@ -5,7 +5,10 @@
     <MudText Typo="Typo.h4">Add payment</MudText>
     <MudForm>
         <MudNumericField Label="Amount" @bind-Value="ViewModel.Amount"/>
-        <MudNumericField Label="Amount for meat" @bind-Value="ViewModel.AmountForMeat"/>
+        @if (ViewModel.IsCurrentPersonEatMeat)
+        {
+            <MudNumericField Label="Amount for meat" @bind-Value="ViewModel.AmountForMeat"/>
+        }
         <MudSelect Label="Who paid?" MultiSelection="true" @bind-SelectedValues="ViewModel.Payers" MultiSelectionTextFunc="_ => ViewModel.SelectedPayers">
             @foreach (var person in ViewModel.AllPersons)
             {

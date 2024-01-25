@@ -21,6 +21,7 @@ internal class AddPaymentFormViewModel
     public decimal? AmountForMeat { get; set; }
     public string Description { get; set; } = "";
     public Person? CurrentPerson => _currentPerson.Person;
+    public bool IsCurrentPersonEatMeat => _currentPerson.Person.IsMeatEater;
     public IEnumerable<Person> AllPersons => _persons.All;
     public string SelectedPayers => string.Join(", ", Payers.Select(payer => payer.Name));
     public string SelectedConsumers => string.Join(", ", Consumers.Select(consumer => consumer.Name));

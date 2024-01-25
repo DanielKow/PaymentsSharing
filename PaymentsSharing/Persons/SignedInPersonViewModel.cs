@@ -1,19 +1,27 @@
 using MediatR;
+using Microsoft.AspNetCore.Components;
 
 namespace PaymentsSharing.Persons;
 
-internal class SignedInPersonViewModel(IPublisher mediator, CurrentPerson currentPerson)
+internal class SignedInPersonViewModel
 {
-    public bool IsSignedIn => currentPerson.IsSignedIn;
-    public string Name => currentPerson.Person.Name;
-    
-    public async Task SignIn()
+    public event Action? OnPersonSignedIn;
+    private readonly CurrentPerson _currentPerson;
+    private readonly IPublisher _mediator;
+
+    public SignedInPersonViewModel(CurrentPerson currentPerson, IPublisher mediator)
     {
-        await mediator.Publish(new PersonSignedIn("Andrzej"));
+        _currentPerson = currentPerson;
+        _mediator = mediator;
+
+        currentPerson.OnCurrentPersonChanged += () => OnPersonSignedIn?.Invoke();
     }
 
+    public bool IsSignedIn => _currentPerson.IsSignedIn;
+    public string Name => _currentPerson.Person.Name;
+    
     public async Task SignOut()
     {
-        await mediator.Publish(new PersonSignedOut());
+        await _mediator.Publish(new PersonSignedOut());
     }
 }
