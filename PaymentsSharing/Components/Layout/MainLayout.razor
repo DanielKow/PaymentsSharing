@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject CurrentPerson CurrentPerson
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -12,11 +13,23 @@
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        @Body
+        @if (CurrentPerson.IsSignedIn)
+        {
+            @Body
+        }
+        else
+        {
+            <h2>Sign in to see content!</h2>
+        }
     </MudMainContent>
 </MudLayout>
 
 @code {
 
     private bool _drawerOpen;
+    
+    protected override void OnInitialized()
+    {
+        CurrentPerson.OnCurrentPersonChanged += () => InvokeAsync(StateHasChanged);
+    }
 }

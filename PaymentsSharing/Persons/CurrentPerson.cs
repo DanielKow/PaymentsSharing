@@ -2,18 +2,21 @@ namespace PaymentsSharing.Persons;
 
 internal class CurrentPerson
 {
-    private Person? _person;
+    public event Action? OnCurrentPersonChanged;
     
     public void SignIn(Person person)
     {
-        _person = person;
+        Person = person;
+        OnCurrentPersonChanged?.Invoke();
     }
     
     public void SignOut()
     {
-        _person = null;
+        Person = Person.Null;
+        OnCurrentPersonChanged?.Invoke();
     }
     
-    public Person? Person => _person;
-    public bool IsSignedIn => _person is not null;
+    public Person Person { get; private set; } = Person.Null;
+
+    public bool IsSignedIn => Person != Person.Null;
 }

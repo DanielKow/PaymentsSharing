@@ -4,8 +4,8 @@ namespace PaymentsSharing.Persons;
 
 internal class SignedInPersonViewModel(IPublisher mediator, CurrentPerson currentPerson)
 {
-    public bool IsSignedIn => currentPerson.Person is not null;
-    public string Name => currentPerson.Person?.Name ?? string.Empty;
+    public bool IsSignedIn => currentPerson.IsSignedIn;
+    public string Name => currentPerson.Person.Name;
     
     public async Task SignIn()
     {
