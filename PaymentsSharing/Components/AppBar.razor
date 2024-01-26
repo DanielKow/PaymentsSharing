@@ -1,5 +1,5 @@
 <MudStack Row="true" Justify="Justify.SpaceBetween" Class="w-100">
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer"/>
+    <MudIconButton Icon="@DrawerIcon" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer"/>
     <MudSpacer/>
     <h1>Budget @_month</h1>
     <MudSpacer/>
@@ -14,7 +14,8 @@
     public EventCallback<bool> DrawerOpenChanged { get; set; }
     
     private readonly string _month = DateTime.Now.ToString("MMMM");
-    
+    string DrawerIcon => DrawerOpen ? Icons.Material.Filled.Close : Icons.Material.Filled.Menu;
+
     void ToggleDrawer()
     {
         DrawerOpen = !DrawerOpen;

@@ -6,30 +6,35 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar>
-        <AppBar @bind-DrawerOpen="_drawerOpen"></AppBar>
-    </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" OpenMiniOnHover="true" ClipMode="DrawerClipMode.Docked" Variant="DrawerVariant.Mini">
-        <NavMenu/>
-    </MudDrawer>
-    <MudMainContent>
-        @if (CurrentPerson.IsSignedIn)
-        {
-            @Body
-        }
-        else
-        {
+    @if (CurrentPerson.IsSignedIn)
+    {
+        <MudAppBar>
+            <AppBar @bind-DrawerOpen="_drawerOpen"></AppBar>
+        </MudAppBar>
+        <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Docked">
+            <NavMenu/>
+        </MudDrawer>
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    }
+    else
+    {
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
             <SignInForm/>
-        }
-    </MudMainContent>
+        </MudContainer>
+    }
 </MudLayout>
 
 @code {
 
     private bool _drawerOpen;
-    
+
     protected override void OnInitialized()
     {
         CurrentPerson.OnCurrentPersonChanged += () => InvokeAsync(StateHasChanged);
     }
+
 }
