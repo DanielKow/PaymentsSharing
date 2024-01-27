@@ -1,3 +1,4 @@
+using System.Collections;
 using MediatR;
 using PaymentsSharing.Persons;
 using PaymentsSharing.Time;
@@ -47,8 +48,7 @@ internal class Payments : INotificationHandler<PaymentAdded>
 
         return Task.CompletedTask;
     }
-
-
+    
     public IEnumerable<Payment> FromMonth(Person person, MonthAndYear monthAndYear)
     {
         return _payments.Where(payment => (payment.Payers.Contains(person) || payment.Consumers.Contains(person))

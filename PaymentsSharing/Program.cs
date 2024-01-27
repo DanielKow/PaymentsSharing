@@ -4,6 +4,7 @@ using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
 using PaymentsSharing.SignIn;
+using PaymentsSharing.Summary;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,8 @@ builder.Services
     .AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly))
     .AddPayments()
     .AddPersons()
-    .AddSignIn();
+    .AddSignIn()
+    .AddSummary();
 
 
 var app = builder.Build();

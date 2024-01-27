@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject SummaryViewModel ViewModel
+
+<MudText Typo="Typo.h1">Budget @ViewModel.CurrentMonthAndYearTitle</MudText>
+
+<MudTable Items="@ViewModel.SummaryRows" Hover="true">
+    <HeaderContent>
+        <MudTh>Who?</MudTh>
+        <MudTh>How much?</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Who paid?">@context.Who</MudTd>
+        <MudTd DataLabel="Who consumed?">@context.HowMuch</MudTd>
+    </RowTemplate>
+</MudTable>
