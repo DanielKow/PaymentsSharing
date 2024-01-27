@@ -1,5 +1,5 @@
 using MudBlazor.Services;
-using PaymentsSharing.Components;
+using PaymentsSharing;
 using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;

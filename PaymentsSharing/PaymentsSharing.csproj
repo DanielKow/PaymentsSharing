@@ -16,6 +16,12 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Users\SignedInUserInfo.razor" />
       <_ContentIncludedByDefault Remove="Users\SignInForm.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Layout\MainLayout.razor" />
+      <AdditionalFiles Include="Home\Home.razor" />
     </ItemGroup>
 
 </Project>
