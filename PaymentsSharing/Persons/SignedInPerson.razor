@@ -7,11 +7,3 @@
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ViewModel.SignOut">Sign out</MudButton>
     </MudStack>
 }
-
-@code {
-    protected override void OnInitialized()
-    {
-        ViewModel.OnPersonSignedIn += () => InvokeAsync(StateHasChanged);
-    }
-
-}

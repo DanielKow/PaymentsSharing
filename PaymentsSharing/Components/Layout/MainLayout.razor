@@ -29,12 +29,5 @@
 </MudLayout>
 
 @code {
-
     private bool _drawerOpen;
-
-    protected override void OnInitialized()
-    {
-        CurrentPerson.OnCurrentPersonChanged += () => InvokeAsync(StateHasChanged);
-    }
-
 }

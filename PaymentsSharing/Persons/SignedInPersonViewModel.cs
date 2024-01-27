@@ -3,25 +3,14 @@ using Microsoft.AspNetCore.Components;
 
 namespace PaymentsSharing.Persons;
 
-internal class SignedInPersonViewModel
+internal class SignedInPersonViewModel(CurrentPerson currentPerson, IPublisher mediator, NavigationManager navigationManager)
 {
-    public event Action? OnPersonSignedIn;
-    private readonly CurrentPerson _currentPerson;
-    private readonly IPublisher _mediator;
-
-    public SignedInPersonViewModel(CurrentPerson currentPerson, IPublisher mediator)
-    {
-        _currentPerson = currentPerson;
-        _mediator = mediator;
-
-        currentPerson.OnCurrentPersonChanged += () => OnPersonSignedIn?.Invoke();
-    }
-
-    public bool IsSignedIn => _currentPerson.IsSignedIn;
-    public string Name => _currentPerson.Person.Name;
+    public bool IsSignedIn => currentPerson.IsSignedIn;
+    public string Name => currentPerson.Person.Name;
     
     public async Task SignOut()
     {
-        await _mediator.Publish(new PersonSignedOut());
+        await mediator.Publish(new PersonSignedOut());
+        navigationManager.NavigateTo("/", true, true);
     }
 }
