@@ -49,6 +49,8 @@ internal class Payments : INotificationHandler<PaymentAdded>
         return Task.CompletedTask;
     }
     
+    public IEnumerable<Payment> All => _payments;
+    
     public IEnumerable<Payment> FromMonth(Person person, MonthAndYear monthAndYear)
     {
         return _payments.Where(payment => (payment.Payers.Contains(person) || payment.Consumers.Contains(person))
