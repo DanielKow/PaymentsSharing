@@ -1,26 +1,36 @@
-@page "/PaymentsList"
-@inject Payments Payments
-@inject Persons Persons
+@page "/Payments"
+@inject PaymentsListViewModel ViewModel
 
-<MudText Typo="Typo.h3">
-    Payments
-</MudText>
+<MudStack Spacing="3">
+    <MudText Typo="Typo.h3">
+        Payments
+    </MudText>
+    
+    <MudStack Row="true" Class="w-100" AlignItems="AlignItems.Center">
+        <MudIconButton Icon="@Icons.Material.Filled.ArrowLeft" OnClick="ViewModel.ToPreviousMonth"/>
+        <MudSpacer/>
+        <MudText Typo="Typo.h4">
+            @ViewModel.MonthAndYearTitle
+        </MudText>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.ArrowRight" OnClick="ViewModel.ToNextMonth" Disabled="!ViewModel.NextMonthIsAvailable"/>
+    </MudStack>
 
-<MudTable Items="@Payments.All" Hover="true">
-    <HeaderContent>
-        <MudTh>Who paid?</MudTh>
-        <MudTh>How much?</MudTh>
-        <MudTh>When?</MudTh>
-        <MudTh>For what?</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Who paid?">@string.Join(", ", context.Payers)</MudTd>
-        <MudTd DataLabel="How much?">@(context.Amount.ToString("N2") + (context.AmountForMeat?.ToString("N2") ?? ""))</MudTd>
-        <MudTd DataLabel="When?">@context.CreatedAt.ToString("dd.MM.yyyy")</MudTd>
-        <MudTd DataLabel="For what?">@(string.IsNullOrEmpty(context.Description) ? "-" : context.Description)</MudTd>
-    </RowTemplate>
-</MudTable>
-
-@code {
-
-}
+    
+    <MudTable Items="@ViewModel.Payments" Hover="true">
+        <HeaderContent>
+            <MudTh>Who paid?</MudTh>
+            <MudTh>Who consumed?</MudTh>
+            <MudTh>How much?</MudTh>
+            <MudTh>When?</MudTh>
+            <MudTh>For what?</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Who paid?">@ViewModel.WhoPaid(context)</MudTd>
+            <MudTd DataLabel="Who consumed?">@ViewModel.WhoConsumed(context)</MudTd>
+            <MudTd DataLabel="How much?">@ViewModel.HowMuch(context)</MudTd>
+            <MudTd DataLabel="When?">@ViewModel.When(context)</MudTd>
+            <MudTd DataLabel="For what?">@ViewModel.ForWhat(context)</MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudStack>

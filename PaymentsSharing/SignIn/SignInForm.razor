@@ -1,15 +1,14 @@
 @inject SignInFormViewModel ViewModel
 
 <MudPaper Class="p-3">
-    <h3>Sign In</h3>
-
     <MudStack @onkeydown="ViewModel.OnKeyDown">
+        <MudText Typo="Typo.h3">Sign in</MudText>
         <MudTextField Label="Username" @bind-Value="ViewModel.Username" Immediate="true"/>
         <MudTextField InputType="InputType.Password" Label="Password" @bind-Value="ViewModel.Password" Immediate="true"/>
         <MudButton OnClick="ViewModel.SignIn">Sign in</MudButton>
         @if (ViewModel.WrongCredentials)
         {
-            <MudText Color="Color.Error">Wrong credentials!</MudText>
+            <MudText Color="Color.Error"><b>Wrong credentials!</b></MudText>
         }
     </MudStack>
 </MudPaper>

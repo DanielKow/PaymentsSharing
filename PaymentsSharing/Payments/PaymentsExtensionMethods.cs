@@ -6,6 +6,7 @@ internal static class PaymentsExtensionMethods
     {
         services.AddSingleton<Payments>();
         services.AddTransient<AddPaymentFormViewModel>();
+        services.AddTransient<PaymentsListViewModel>();
         return services;
     }
 }

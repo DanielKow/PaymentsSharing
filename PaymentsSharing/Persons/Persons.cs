@@ -12,7 +12,7 @@ internal class Persons
     {
         return _persons.Single(person => person.Name == name);
     }
-    public IReadOnlyCollection<Person> All => _persons;
+    public IReadOnlyCollection<Person> Everyone => _persons;
     public IReadOnlyCollection<Person> MeatEaters => _persons.Where(person => person.IsMeatEater).ToArray();
     
     public bool VerifyPersons(IEnumerable<Person> persons)

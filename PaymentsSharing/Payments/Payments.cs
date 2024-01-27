@@ -1,5 +1,6 @@
 using MediatR;
 using PaymentsSharing.Persons;
+using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Payments;
 
@@ -21,6 +22,17 @@ internal class Payments : INotificationHandler<PaymentAdded>
             100,
             null,
             "Pepco"),
+        new Payment(
+            new DateTime(2024, 1, 4),
+            new[] { new Person("Mikołaj", false) },
+            new[] { new Person("Natalia", false), new Person("Mikołaj", true), new Person("Andrzej", true) },
+            22,
+            12),
+        new Payment(
+            new DateTime(2024, 1, 4),
+            new[] { new Person("Mikołaj", false) },
+            new[] { new Person("Natalia", false), new Person("Mikołaj", true) },
+            40)
     ];
 
     public Task Handle(PaymentAdded notification, CancellationToken cancellationToken)
@@ -36,16 +48,11 @@ internal class Payments : INotificationHandler<PaymentAdded>
         return Task.CompletedTask;
     }
 
-    public IReadOnlyCollection<Payment> All => _payments;
 
-    public IReadOnlyCollection<Payment> FromCurrentMonth =>
-        _payments.Where(payment => payment.CreatedAt.Month == DateTime.Now.Month).ToArray();
-
-    public IReadOnlyCollection<Payment> FromLastMonth =>
-        _payments.Where(payment => payment.CreatedAt.Month == DateTime.Now.Month - 1).ToArray();
-
-    public IReadOnlyCollection<Payment> ForPayer(Person person) =>
-        _payments.Where(payment => payment.Payers.Contains(person)).ToArray();
-    
-    
+    public IEnumerable<Payment> FromMonth(Person person, MonthAndYear monthAndYear)
+    {
+        return _payments.Where(payment => (payment.Payers.Contains(person) || payment.Consumers.Contains(person))
+                                          && payment.CreatedAt.Month == monthAndYear.Month
+                                          && payment.CreatedAt.Year == monthAndYear.Year);
+    }
 }

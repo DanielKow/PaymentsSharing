@@ -12,7 +12,7 @@ internal class AddPaymentFormViewModel
         _currentPerson = currentPerson;
         _persons = persons;
         Payers = _currentPerson.IsSignedIn ? [_currentPerson.Person] : [];
-        Consumers = _persons.All;
+        Consumers = _persons.Everyone;
     }
     
     public IEnumerable<Person> Payers { get; set; }
@@ -22,7 +22,7 @@ internal class AddPaymentFormViewModel
     public string Description { get; set; } = "";
     public Person? CurrentPerson => _currentPerson.Person;
     public bool IsCurrentPersonEatMeat => _currentPerson.Person.IsMeatEater;
-    public IEnumerable<Person> AllPersons => _persons.All;
+    public IEnumerable<Person> AllPersons => _persons.Everyone;
     public string SelectedPayers => string.Join(", ", Payers.Select(payer => payer.Name));
     public string SelectedConsumers => string.Join(", ", Consumers.Select(consumer => consumer.Name));
 
