@@ -5,7 +5,8 @@ namespace PaymentsSharing.Payments;
 
 internal class PaymentsListViewModel(Payments payments, CurrentPerson currentPerson, Persons.Persons persons)
 {
-    public IEnumerable<Payment> Payments => payments.FromMonth(currentPerson.Person, _monthAndYear);
+    public IEnumerable<Payment> Payments =>
+        payments.FromMonth(currentPerson.Person, _monthAndYear).OrderBy(payment => payment.CreatedAt);
 
     private MonthAndYear _monthAndYear = MonthAndYear.Now;
 
@@ -20,7 +21,7 @@ internal class PaymentsListViewModel(Payments payments, CurrentPerson currentPer
     }
 
     public bool NextMonthIsAvailable => _monthAndYear != MonthAndYear.Now;
-    
+
     public string MonthAndYearTitle => new DateTime(_monthAndYear.Year, _monthAndYear.Month, 1).ToString("MMMM yyyy");
 
     public string WhoPaid(Payment payment) =>
