@@ -6,5 +6,5 @@ internal class RefundsTableViewModel(Refunds refunds)
     public IEnumerable<string> To => refunds.Select(refund => refund.To).Distinct();
 
     public string ToReturn(string from, string to) =>
-        refunds.FirstOrDefault(refund => refund.From == from && refund.To == to)?.Amount.ToString("0.00 PLN") ?? "-";
+        refunds.FirstOrDefault(refund => refund.From == from && refund.To == to)?.Amount.ToString("0 PLN") ?? "-";
 }

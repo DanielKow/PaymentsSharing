@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using PaymentsSharing.Persons;
 
 namespace PaymentsSharing.Payments;
@@ -17,8 +18,8 @@ internal class AddPaymentFormViewModel
     
     public IEnumerable<Person> Payers { get; set; }
     public IEnumerable<Person> Consumers { get; set; }
-    public decimal Amount { get; set; }
-    public decimal? AmountForMeat { get; set; }
+    public uint Amount { get; set; }
+    public uint? AmountForMeat { get; set; }
     public string Description { get; set; } = "";
     public Person? CurrentPerson => _currentPerson.Person;
     public bool IsCurrentPersonEatMeat => _currentPerson.Person.IsMeatEater;
@@ -26,6 +27,22 @@ internal class AddPaymentFormViewModel
     public string SelectedPayers => string.Join(", ", Payers.Select(payer => payer.Name));
     public string SelectedConsumers => string.Join(", ", Consumers.Select(consumer => consumer.Name));
 
+    public void UpdateAmount(ChangeEventArgs eventArgs)
+    {
+        if (uint.TryParse(eventArgs.Value?.ToString(), out uint amount))
+        {
+            Amount = amount;
+        }
+    }
+    
+    public void UpdateAmountForMeat(ChangeEventArgs eventArgs)
+    {
+        if (uint.TryParse(eventArgs.Value?.ToString(), out uint amountForMeat))
+        {
+            AmountForMeat = amountForMeat;
+        }
+    }
+    
     public void Save()
     {
         var payment = new Payment(
