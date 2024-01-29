@@ -1,0 +1,32 @@
+@page "/Refunds"
+@inject RefundsTableViewModel ViewModel
+
+<MudText Typo="Typo.h2">Refunds </MudText>
+
+<MudSimpleTable>
+    <thead>
+    <tr>
+        <th>From\To</th>
+        @foreach (string to in ViewModel.To)
+        {
+            <th>@to</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (string from in ViewModel.From)
+    {
+        <tr>
+            <th>@from</th>
+            @foreach (string to in ViewModel.To)
+            {
+                <td>-</td>
+            }
+        </tr>
+    }
+    </tbody>
+</MudSimpleTable>
+
+@code {
+    
+}

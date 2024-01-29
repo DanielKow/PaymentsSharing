@@ -3,9 +3,8 @@ using PaymentsSharing.Persons;
 
 namespace PaymentsSharing.Payments;
 
-internal class AddPaymentHandler(Persons.Persons persons, IPublisher mediator) : IRequestHandler<AddPayment>
+internal class AddPaymentHandler(Persons.Persons persons, Payments payments) : IRequestHandler<AddPayment>
 {
-
     public async Task Handle(AddPayment addPayment, CancellationToken cancellationToken)
     {
         if (!persons.VerifyPersons(addPayment.Payers))
@@ -28,12 +27,12 @@ internal class AddPaymentHandler(Persons.Persons persons, IPublisher mediator) :
             throw new InvalidPaymentException("Amount for meat must be greater than 0");
         }
         
-        await mediator.Publish(new PaymentAdded(
+        await payments.Add(new Payment(
             DateTime.Now,
             addPayment.Payers,
             addPayment.Consumers,
             addPayment.Amount,
             addPayment.AmountForMeat,
-            addPayment.Description), cancellationToken);
+            addPayment.Description));
     }
 }

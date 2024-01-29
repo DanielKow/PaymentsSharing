@@ -1,11 +1,10 @@
-using System.Collections;
 using MediatR;
 using PaymentsSharing.Persons;
 using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Payments;
 
-internal class Payments : INotificationHandler<PaymentAdded>
+internal class Payments(IPublisher mediator)
 {
     private readonly List<Payment> _payments =
     [
@@ -36,17 +35,16 @@ internal class Payments : INotificationHandler<PaymentAdded>
             40)
     ];
 
-    public Task Handle(PaymentAdded notification, CancellationToken cancellationToken)
+    public async Task Add(Payment payment)
     {
-        _payments.Add(new Payment(
-            notification.CreatedAt,
-            notification.Payers,
-            notification.Consumers,
-            notification.Amount,
-            notification.AmountForMeat,
-            notification.Description));
-
-        return Task.CompletedTask;
+        _payments.Add(payment);
+        await mediator.Publish(new PaymentAdded(
+            payment.CreatedAt,
+            payment.Payers,
+            payment.Consumers,
+            payment.Amount,
+            payment.AmountForMeat,
+            payment.Description));
     }
     
     public IEnumerable<Payment> All => _payments;
