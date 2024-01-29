@@ -3,6 +3,7 @@ using PaymentsSharing;
 using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
+using PaymentsSharing.Refunds;
 using PaymentsSharing.SignIn;
 using PaymentsSharing.Summary;
 
@@ -19,7 +20,8 @@ builder.Services
     .AddPayments()
     .AddPersons()
     .AddSignIn()
-    .AddSummary();
+    .AddSummary()
+    .AddRefunds();
 
 
 var app = builder.Build();
