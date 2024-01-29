@@ -5,23 +5,17 @@ using PaymentsSharing.Persons;
 
 namespace PaymentsSharing.Refunds;
 
-internal class Refunds(Payments.Payments payments) : INotificationHandler<PaymentAdded>, IEnumerable<Refund>
+internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
 {
-    private readonly List<Refund> _refunds =
-    [
-        new Refund("Andrzej", "Mikołaj", 12),
-        new Refund("Andrzej", "Natalia", 22),
-        new Refund("Andrzej", "Mikołaj+Natalia", 50),
-        new Refund("Mikołaj", "Natalia", 2)
-    ];
+    private readonly List<Refund> _refunds = [];
 
-    public Task Handle(PaymentAdded paymentAdded, CancellationToken cancellationToken)
+    public void Recalculate()
     {
         var refunds = new Dictionary<InvolvedInRefund, decimal>();
 
         foreach (Payment payment in payments.All)
         {
-            int numberOfConsumers = payment.Consumers.Count;
+            var numberOfConsumers = (uint) payment.Consumers.Count();
             decimal amountPerConsumer = (decimal)payment.Amount / numberOfConsumers;
 
             foreach (Person consumer in payment.Consumers)
@@ -42,11 +36,15 @@ internal class Refunds(Payments.Payments payments) : INotificationHandler<Paymen
                 var involvedInRefund = new InvolvedInRefund(consumer.Name, payers);
                 refunds.TryAdd(involvedInRefund, 0);
 
-                refunds[involvedInRefund] += amountPerConsumer;
+                refunds[involvedInRefund] += (uint)amountPerConsumer;
             }
         }
-
-        return Task.CompletedTask;
+        
+        _refunds.Clear();
+        foreach (KeyValuePair<InvolvedInRefund, decimal> refund in refunds)
+        {
+            _refunds.Add(new Refund(refund.Key.From, refund.Key.To, (uint)refund.Value));
+        }
     }
 
     public IEnumerator<Refund> GetEnumerator()

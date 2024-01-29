@@ -6,34 +6,7 @@ namespace PaymentsSharing.Payments;
 
 internal class Payments(IPublisher mediator)
 {
-    private readonly List<Payment> _payments =
-    [
-        new Payment(
-            new DateTime(2024, 1, 2),
-            new[] { new Person("Natalia", false) },
-            new[] { new Person("Natalia", false), new Person("Mikołaj", true), new Person("Andrzej", true) },
-            100,
-            null,
-            "Warzywka"),
-        new Payment(
-            new DateTime(2024, 1, 3),
-            new[] { new Person("Natalia", false), new Person("Mikołaj", true) },
-            new[] { new Person("Natalia", false), new Person("Mikołaj", true), new Person("Andrzej", true) },
-            100,
-            null,
-            "Pepco"),
-        new Payment(
-            new DateTime(2024, 1, 4),
-            new[] { new Person("Mikołaj", false) },
-            new[] { new Person("Natalia", false), new Person("Mikołaj", true), new Person("Andrzej", true) },
-            22,
-            12),
-        new Payment(
-            new DateTime(2024, 1, 4),
-            new[] { new Person("Mikołaj", false) },
-            new[] { new Person("Natalia", false), new Person("Mikołaj", true) },
-            40)
-    ];
+    private readonly List<Payment> _payments = [];
 
     public async Task Add(Payment payment)
     {

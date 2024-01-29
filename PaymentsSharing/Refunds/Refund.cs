@@ -1,3 +1,3 @@
 namespace PaymentsSharing.Refunds;
 
-internal record  Refund(string From, string To, int Amount);
+internal record  Refund(string From, string To, uint Amount);
