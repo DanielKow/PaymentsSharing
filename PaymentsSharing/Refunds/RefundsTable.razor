@@ -1,7 +1,8 @@
 @page "/Refunds"
+@using PaymentsSharing.Time
 @inject RefundsTableViewModel ViewModel
 
-<MudText Typo="Typo.h2">Refunds </MudText>
+<MudText Typo="Typo.h2">Refunds @MonthAndYear.Now</MudText>
 
 <MudSimpleTable>
     <thead>
@@ -20,7 +21,7 @@
             <th>@from</th>
             @foreach (string to in ViewModel.To)
             {
-                <td>-</td>
+                <td>@ViewModel.ToReturn(from, to)</td>
             }
         </tr>
     }

@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace PaymentsSharing.Time;
 
 internal readonly record struct MonthAndYear
@@ -27,4 +29,6 @@ internal readonly record struct MonthAndYear
     
     public MonthAndYear Previous => Month == 1 ? new MonthAndYear(12, Year - 1) : new MonthAndYear(Month - 1, Year);
     public MonthAndYear Next => Month == 12 ? new MonthAndYear(1, Year + 1) : new MonthAndYear(Month + 1, Year);
+    
+    public override string ToString() => $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Month)} {Year}";
 }
