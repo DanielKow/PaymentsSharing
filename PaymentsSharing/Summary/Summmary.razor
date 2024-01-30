@@ -1,7 +1,8 @@
 ﻿@page "/"
+@using PaymentsSharing.Time
 @inject SummaryViewModel ViewModel
 
-<MudText Typo="Typo.h1">Budget @ViewModel.CurrentMonthAndYearTitle</MudText>
+<MudText Typo="Typo.h1">Budget @MonthAndYear.Now</MudText>
 <br/>
 <MudText Typo="Typo.h2">Spent @ViewModel.Amount</MudText>
 <MudText Typo="Typo.h2">Spent for meat @ViewModel.AmountForMeat</MudText>

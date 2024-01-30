@@ -11,40 +11,39 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
 
     public void Recalculate()
     {
-        var refunds = new Dictionary<InvolvedInRefund, decimal>();
+        var refundsGraph = new RefundsGraph();
+        
 
-        foreach (Payment payment in payments.All)
+        foreach (Payment payment in payments.FromCurrentMonth)
         {
-            var numberOfConsumers = (uint) payment.Consumers.Count();
-            decimal amountPerConsumer = (decimal)payment.Amount / numberOfConsumers;
+            string payer = string.Join('+', payment.Payers.Select(payer => payer.Name));
+            refundsGraph.AddNode(payer);
 
             foreach (Person consumer in payment.Consumers)
             {
-                if (consumer.IsMeatEater)
-                {
-                    amountPerConsumer += (decimal)(payment.AmountForMeat ?? 0) / numberOfConsumers;
-                }
-
-                if (payment.Payers.Contains(consumer))
-                {
-                    continue;
-                }
-
-                string payers = string.Join('+',
-                    payment.Payers.OrderByDescending(payer => payer.Name).Select(payer => payer.Name));
-
-                var involvedInRefund = new InvolvedInRefund(consumer.Name, payers);
-                refunds.TryAdd(involvedInRefund, 0);
-
-                refunds[involvedInRefund] += (uint)amountPerConsumer;
+                refundsGraph.AddNode(consumer.Name);
             }
         }
         
-        _refunds.Clear();
-        foreach (KeyValuePair<InvolvedInRefund, decimal> refund in refunds)
+        foreach (Payment payment in payments.FromCurrentMonth)
         {
-            _refunds.Add(new Refund(refund.Key.From, refund.Key.To, (uint)refund.Value));
+            string payer = string.Join('+', payment.Payers.Select(payer => payer.Name));
+            foreach (Person consumer in payment.Consumers)
+            {
+                if (payment.Payers.Contains(consumer)) continue;
+                
+                refundsGraph.AddEdge(consumer.Name, payer, (decimal) payment.Amount / payment.Consumers.Count());
+                
+                if (payment.AmountForMeat is not null && consumer.IsMeatEater)
+                {
+                    refundsGraph.AddEdge(consumer.Name, payer, (decimal) (payment.AmountForMeat ?? 0) / payment.Consumers.Count());
+                }
+            }
         }
+        
+        refundsGraph.MergeBidirectionalEdges();
+        
+        _refunds.Clear();
     }
 
     public IEnumerator<Refund> GetEnumerator()

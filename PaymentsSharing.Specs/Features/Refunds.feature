@@ -10,6 +10,7 @@ Scenario: May 2022
 	And Natalia has paid 100 PLN
 	And Natalia has paid 103 PLN
 	And Andrzej has paid 330 PLN
+	And Andrzej has paid 4 PLN for meat
 	When refund is recalculated
 	Then Natalia should return 174 PLN to Mikołaj
 	And Andrzej should return 64 PLN to Mikołaj

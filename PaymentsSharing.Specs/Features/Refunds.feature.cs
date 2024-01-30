@@ -120,12 +120,15 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("Andrzej has paid 330 PLN", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 13
- testRunner.When("refund is recalculated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("Andrzej has paid 4 PLN for meat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 14
- testRunner.Then("Natalia should return 174 PLN to Mikołaj", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("refund is recalculated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
+ testRunner.Then("Natalia should return 174 PLN to Mikołaj", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 16
  testRunner.And("Andrzej should return 64 PLN to Mikołaj", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
