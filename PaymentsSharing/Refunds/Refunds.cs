@@ -13,18 +13,6 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
     {
         var refundsGraph = new RefundsGraph();
         
-
-        foreach (Payment payment in payments.FromCurrentMonth)
-        {
-            string payer = string.Join('+', payment.Payers.Select(payer => payer.Name));
-            refundsGraph.AddNode(payer);
-
-            foreach (Person consumer in payment.Consumers)
-            {
-                refundsGraph.AddNode(consumer.Name);
-            }
-        }
-        
         foreach (Payment payment in payments.FromCurrentMonth)
         {
             string payer = string.Join('+', payment.Payers.Select(payer => payer.Name));
