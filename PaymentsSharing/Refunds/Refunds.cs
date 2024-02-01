@@ -1,5 +1,6 @@
 using System.Collections;
 using MediatR;
+using PaymentsSharing.Collections;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
 
@@ -30,10 +31,40 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
         }
         
         refundsGraph.MergeBidirectionalEdges();
+
+        List<Refund> edgesToRemove = [];
+        
+        foreach (string node in refundsGraph.Nodes)
+        {
+            IEnumerable<string> edgesToNode = refundsGraph.EdgesTo(node).Select(refund => refund.From);
+
+            IEnumerable<Pair<string>> variations = edgesToNode.TwoElementsVariations();
+            
+            foreach ((string first, string second) in variations)
+            {
+                Refund? neighboursEdge = refundsGraph.Edge(first, second);
+                
+                if (neighboursEdge is null) continue;
+                
+                //refundsGraph.UpdateWeightBy(neighboursEdge.From, node, neighboursEdge.Amount);
+
+                if (neighboursEdge.Amount <= refundsGraph.Weight(neighboursEdge.To, node))
+                {
+                    //refundsGraph.UpdateWeightBy(neighboursEdge.To, node, -neighboursEdge.Amount);
+                }
+
+                edgesToRemove.Add(neighboursEdge);
+            }
+        }
+        
+        foreach (Refund edgeToRemove in edgesToRemove)
+        {
+            refundsGraph.RemoveEdge(edgeToRemove.From, edgeToRemove.To);
+        }
         
         _refunds.Clear();
     }
-
+    
     public IEnumerator<Refund> GetEnumerator()
     {
         return _refunds.GetEnumerator();
