@@ -39,3 +39,38 @@ Scenario: December 2021
 	When refund is recalculated
 	Then Natalia should return 121 PLN to Mikołaj
 	And Natalia should return 77 PLN to Andrzej
+	
+Scenario: January 2024
+	Given Mikołaj has paid 1025 PLN
+	And Natalia has paid 47 PLN
+	And Andrzej has paid 150 PLN
+	And Natalia and Mikołaj have paid 915 PLN
+	When refund is recalculated
+	Then Andrzej should return 258 PLN to Mikołaj
+	And Andrzej should return 305 PLN to Natalia+Mikołaj
+	And Natalia should return 361 PLN to Mikołaj
+	
+Scenario: Mikołaj paid for himself and Natalia
+	Given Mikołaj has paid 300 PLN
+	And Natalia has paid 90 PLN
+	And Mikołaj has paid 200 PLN for Mikołaj and Natalia
+	When refund is recalculated
+	Then Andrzej should return 130 PLN to Mikołaj
+	And Natalia should return 140 PLN to Mikołaj
+
+@ignore
+Scenario: Natalia paid for herself and Mikołaj - not optimized number of refunding persons
+	Given Mikołaj has paid 300 PLN
+	And Natalia has paid 90 PLN
+	And Natalia has paid 200 PLN for Mikołaj and Natalia
+	When refund is recalculated
+	Then Andrzej should return 130 PLN to Mikołaj
+	And Mikołaj should return 60 PLN to Natalia
+	
+Scenario: Natalia paid for herself and Mikołaj
+	Given Mikołaj has paid 300 PLN
+	And Natalia has paid 90 PLN
+	And Natalia has paid 200 PLN for Mikołaj and Natalia
+	When refund is recalculated
+	Then Andrzej should return 70 PLN to Mikołaj
+	And Andrzej should return 60 PLN to Natalia
