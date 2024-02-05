@@ -1,5 +1,4 @@
 using System.Collections;
-using MediatR;
 using PaymentsSharing.Collections;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
@@ -12,6 +11,7 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
 
     public void Recalculate()
     {
+        _refunds.Clear();
         var refundsGraph = new RefundsGraph();
         
         foreach (Payment payment in payments.FromCurrentMonth)
@@ -43,20 +43,25 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
                 Refund? neighboursEdge = refundsGraph.Edge(first, second);
                 
                 if (neighboursEdge is null) continue;
-                
-                refundsGraph.IncreaseWeight(neighboursEdge.From, node, neighboursEdge.Amount);
 
-                if (neighboursEdge.Amount <= refundsGraph.Weight(neighboursEdge.To, node))
+                Refund firstToNode = refundsGraph.Edge(neighboursEdge.From, node)!;
+                Refund secondToNode = refundsGraph.Edge(neighboursEdge.To, node)!;
+
+                if (secondToNode <= neighboursEdge)
                 {
-                    refundsGraph.DecreaseWeight(neighboursEdge.To, node, neighboursEdge.Amount);
+                    firstToNode.Increase(secondToNode.Amount);
+                    neighboursEdge.Decrease(secondToNode.Amount);
+                    secondToNode.Reset();
+                    continue;
                 }
 
+                firstToNode.Increase(neighboursEdge.Amount);
+                secondToNode.Decrease(neighboursEdge.Amount);
                 neighboursEdge.Reset();
             }
         }
         
         refundsGraph.RemoveZeroEdges();
-        _refunds.Clear();
         
         foreach (Refund refund in refundsGraph.Edges)
         {

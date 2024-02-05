@@ -25,16 +25,22 @@ public class RefundsSteps
         _refunds = new Refunds.Refunds(_payments);
     }
     
-    [Given("(.*) has paid (.*) PLN")]
+    [Given(@"(.*) has paid (\d+) PLN")]
     public async Task GivenPersonHasPaidPln(string person, uint amount)
     {
         await _payments.Add(new Payment(DateTime.Now, _persons.Where(row => row.Name == person), _persons, amount));
     }
 
-    [Given("(.*) has paid (.*) PLN for meat")]
+    [Given(@"(.*) has paid (\d+) PLN for meat")]
     public async Task GivenPersonHasPaidPlnForMeat(string person, uint amount)
     {
         await _payments.Add(new Payment(DateTime.Now, _persons.Where(row => row.Name == person), _persons, 0, amount));
+    }
+    
+    [Given(@"(.*) has paid (\d+) PLN and (\d+) PLN for meat")]
+    public async Task GivenPersonHasPaidPlnAndPlnForMeat(string person, uint amount, uint amountForMeat)
+    {
+        await _payments.Add(new Payment(DateTime.Now, _persons.Where(row => row.Name == person), _persons, amount, amountForMeat));
     }
 
     [When("refund is recalculated")]
@@ -43,7 +49,7 @@ public class RefundsSteps
         _refunds.Recalculate();
     }
 
-    [Then("(.*) should return (.*) PLN to (.*)")]
+    [Then(@"(.*) should return (\d+) PLN to (.*)")]
     public void ThenPersonShouldReturnPlnToAnotherPerson(string from, uint amount, string to)
     {
         _refunds.Should().Contain(new Refund(from, to).WithAmount(amount));

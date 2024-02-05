@@ -30,4 +30,12 @@ internal record Refund(string From, string To)
     {
         Amount = 0;
     }
+    
+    public static bool operator >(Refund first, Refund second) => first.Amount > second.Amount;
+
+    public static bool operator <(Refund first, Refund second) => first.Amount < second.Amount;
+    
+    public static bool operator >=(Refund first, Refund second) => first.Amount >= second.Amount;
+    
+    public static bool operator <=(Refund first, Refund second) => first.Amount <= second.Amount;
 }
