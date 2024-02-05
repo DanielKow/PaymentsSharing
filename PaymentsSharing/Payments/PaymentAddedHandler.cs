@@ -6,6 +6,6 @@ internal class PaymentAddedHandler : INotificationHandler<PaymentAdded>
 {
     public Task Handle(PaymentAdded notification, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 }

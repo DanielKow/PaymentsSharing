@@ -50,6 +50,16 @@ Scenario: January 2024
 	And Andrzej should return 305 PLN to Natalia+Mikołaj
 	And Natalia should return 361 PLN to Mikołaj
 	
+Scenario: Mikołaj and Natalia paid from shared account
+	Given Mikołaj has paid 1025 PLN
+	And Natalia has paid 47 PLN
+	And Andrzej has paid 150 PLN
+	And Mikołaj and Natalia have paid 915 PLN
+	When refund is recalculated
+	Then Andrzej should return 258 PLN to Mikołaj
+	And Andrzej should return 305 PLN to Natalia+Mikołaj
+	And Natalia should return 361 PLN to Mikołaj
+	
 Scenario: Mikołaj paid for himself and Natalia
 	Given Mikołaj has paid 300 PLN
 	And Natalia has paid 90 PLN
@@ -74,3 +84,15 @@ Scenario: Natalia paid for herself and Mikołaj
 	When refund is recalculated
 	Then Andrzej should return 70 PLN to Mikołaj
 	And Andrzej should return 60 PLN to Natalia
+	
+Scenario: Couple payments from shared account of Mikołaj and Natalia
+	Given Mikołaj has paid 900 PLN
+	And Natalia has paid 300 PLN
+	And Mikołaj and Natalia have paid 200 PLN
+	And Natalia and Mikołaj have paid 100 PLN
+	And Natalia and Mikołaj have paid 50 PLN
+	And Mikołaj and Natalia have paid 300 PLN
+	When refund is recalculated
+	Then Natalia should return 100 PLN to Mikołaj
+	And Andrzej should return 400 PLN to Mikołaj
+	And Andrzej should return 217 PLN to Natalia+Mikołaj

@@ -16,7 +16,7 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
         
         foreach (Payment payment in payments.FromCurrentMonth)
         {
-            string payer = string.Join('+', payment.Payers.Select(payer => payer.Name));
+            string payer = string.Join('+', payment.Payers.Select(payer => payer.Name).OrderByDescending(name => name));
             foreach (Person consumer in payment.Consumers)
             {
                 if (payment.Payers.Contains(consumer)) continue;

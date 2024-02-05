@@ -17,14 +17,9 @@ internal class AddPaymentHandler(Persons.Persons persons, Payments payments) : I
             throw new InvalidPaymentException("Consumers are not valid");
         }
         
-        if (addPayment.Amount <= 0)
+        if (addPayment.Amount + (addPayment.AmountForMeat ?? 0) <= 0)
         {
             throw new InvalidPaymentException("Amount must be greater than 0");
-        }
-        
-        if (addPayment.AmountForMeat is <= 0)
-        {
-            throw new InvalidPaymentException("Amount for meat must be greater than 0");
         }
         
         await payments.Add(new Payment(

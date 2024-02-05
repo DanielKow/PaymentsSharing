@@ -1,3 +1,4 @@
+using MediatR;
 using MudBlazor.Services;
 using PaymentsSharing;
 using PaymentsSharing.EventStore;
@@ -24,7 +25,7 @@ builder.Services
     .AddRefunds();
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -42,4 +43,54 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+AddTestPayments().Wait();
+
 app.Run();
+
+async Task AddTestPayments()
+{
+    var persons = app.Services.GetRequiredService<Persons>();
+
+    var mediator = app.Services.GetRequiredService<ISender>();
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Natalia"),
+        persons.Everyone,
+        100,
+        0,
+        "Pizza"));
+
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
+        persons.Everyone,
+        200,
+        0,
+        "Lidl"));
+
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Mikołaj"),
+        persons.Everyone,
+        50,
+        50,
+        "Dino"));
+
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Andrzej"),
+        persons.Everyone,
+        13,
+        0,
+        "Chleb"));
+
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Natalia"),
+        persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
+        300,
+        0,
+        "Pepco"));
+
+    await mediator.Send(new AddPayment(
+        persons.Everyone.Where(person => person.Name is "Mikołaj"),
+        persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
+        100,
+        0,
+        "Aldi"));
+}

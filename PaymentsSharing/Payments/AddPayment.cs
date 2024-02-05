@@ -4,8 +4,8 @@ using PaymentsSharing.Persons;
 namespace PaymentsSharing.Payments;
 
 internal record AddPayment(
-    IReadOnlyCollection<Person> Payers,
-    IReadOnlyCollection<Person> Consumers,
+    IEnumerable<Person> Payers,
+    IEnumerable<Person> Consumers,
     uint Amount,
     uint? AmountForMeat = null,
     string Description = "") : IRequest;
