@@ -46,6 +46,6 @@ public class RefundsSteps
     [Then("(.*) should return (.*) PLN to (.*)")]
     public void ThenPersonShouldReturnPlnToAnotherPerson(string from, uint amount, string to)
     {
-        _refunds.Should().Contain(new Refund(from, to, amount));
+        _refunds.Should().Contain(new Refund(from, to).WithAmount(amount));
     }
 }

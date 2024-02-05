@@ -25,14 +25,12 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
                 
                 if (payment.AmountForMeat is not null && consumer.IsMeatEater)
                 {
-                    refundsGraph.AddEdge(consumer.Name, payer, (decimal) (payment.AmountForMeat ?? 0) / payment.Consumers.Count());
+                    refundsGraph.AddEdge(consumer.Name, payer, (decimal) (payment.AmountForMeat ?? 0) / payment.Consumers.Count(person => person.IsMeatEater));
                 }
             }
         }
         
         refundsGraph.MergeBidirectionalEdges();
-
-        List<Refund> edgesToRemove = [];
         
         foreach (string node in refundsGraph.Nodes)
         {
@@ -46,23 +44,24 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
                 
                 if (neighboursEdge is null) continue;
                 
-                //refundsGraph.UpdateWeightBy(neighboursEdge.From, node, neighboursEdge.Amount);
+                refundsGraph.IncreaseWeight(neighboursEdge.From, node, neighboursEdge.Amount);
 
                 if (neighboursEdge.Amount <= refundsGraph.Weight(neighboursEdge.To, node))
                 {
-                    //refundsGraph.UpdateWeightBy(neighboursEdge.To, node, -neighboursEdge.Amount);
+                    refundsGraph.DecreaseWeight(neighboursEdge.To, node, neighboursEdge.Amount);
                 }
 
-                edgesToRemove.Add(neighboursEdge);
+                neighboursEdge.Reset();
             }
         }
         
-        foreach (Refund edgeToRemove in edgesToRemove)
-        {
-            refundsGraph.RemoveEdge(edgeToRemove.From, edgeToRemove.To);
-        }
-        
+        refundsGraph.RemoveZeroEdges();
         _refunds.Clear();
+        
+        foreach (Refund refund in refundsGraph.Edges)
+        {
+            _refunds.Add(refund.WithIntegerAmount());
+        }
     }
     
     public IEnumerator<Refund> GetEnumerator()

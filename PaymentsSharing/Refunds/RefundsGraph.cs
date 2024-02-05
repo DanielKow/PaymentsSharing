@@ -14,6 +14,16 @@ internal class RefundsGraph
     public IEnumerable<Refund> EdgesTo(string to) => _graph.Where(edge => edge.To == to);
 
     public decimal Weight(string from, string to) => Edge(from, to)?.Amount ?? 0;
+
+    public void IncreaseWeight(string from, string to, decimal amount)
+    {
+        _graph.FirstOrDefault(edge => edge.From == from && edge.To == to)?.Increase(amount);
+    }
+    
+    public void DecreaseWeight(string from, string to, decimal amount)
+    {
+        _graph.FirstOrDefault(edge => edge.From == from && edge.To == to)?.Decrease(amount);
+    }
     
     public Refund? Edge(string from, string to) => _graph.FirstOrDefault(edge => edge.From == from && edge.To == to);
 
@@ -23,23 +33,19 @@ internal class RefundsGraph
 
         if (existingEdge is null)
         {
-            _graph.Add(new Refund(from, to, amount));
+            _graph.Add(new Refund(from, to).WithAmount(amount));
             return;
         }
 
-        _graph.Remove(existingEdge);
-        _graph.Add(new Refund(from, to, existingEdge.Amount + amount));
+        existingEdge.Increase(amount);
     }
+    
 
-    public void RemoveEdge(string from, string to)
+    public void RemoveZeroEdges()
     {
-        Refund? toRemove = _graph.FirstOrDefault(edge => edge.From == from && edge.To == to);
-        if (toRemove is not null)
-        {
-            _graph.Remove(toRemove);
-        }
+        _graph.RemoveAll(edge => edge.Amount == 0);
     }
-
+    
     public void Clear()
     {
         _graph.Clear();
@@ -59,10 +65,9 @@ internal class RefundsGraph
                 continue;
             }
 
-            if (edge.Amount > oppositeEdge.Amount)
-            {
-                merged.Add(edge with { Amount = edge.Amount - oppositeEdge.Amount });
-            }
+            if (edge.Amount <= oppositeEdge.Amount) continue;
+            
+            merged.Add(new Refund(edge.From, edge.To).WithAmount(edge.Amount - oppositeEdge.Amount));
         }
 
         Clear();
