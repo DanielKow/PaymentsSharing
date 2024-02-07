@@ -56,14 +56,14 @@ async Task AddTestPayments()
         persons.Everyone.Where(person => person.Name is "Natalia"),
         persons.Everyone,
         100,
-        0,
+        null,
         "Pizza"));
 
     await mediator.Send(new AddPayment(
         persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
         persons.Everyone,
         200,
-        0,
+        null,
         "Lidl"));
 
     await mediator.Send(new AddPayment(
@@ -77,20 +77,20 @@ async Task AddTestPayments()
         persons.Everyone.Where(person => person.Name is "Andrzej"),
         persons.Everyone,
         13,
-        0,
+        null,
         "Chleb"));
 
     await mediator.Send(new AddPayment(
         persons.Everyone.Where(person => person.Name is "Natalia"),
         persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
         300,
-        0,
+        null,
         "Pepco"));
 
     await mediator.Send(new AddPayment(
         persons.Everyone.Where(person => person.Name is "Mikołaj"),
         persons.Everyone.Where(person => person.Name is "Natalia" or "Mikołaj"),
         100,
-        0,
+        null,
         "Aldi"));
 }

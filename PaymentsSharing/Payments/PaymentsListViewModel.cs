@@ -32,7 +32,7 @@ internal class PaymentsListViewModel(Payments payments, CurrentPerson currentPer
         : string.Join(", ", payment.Consumers.Select(person => person.Name));
 
     public string HowMuch(Payment payment) =>
-        $"{payment.Amount:0.00 PLN} {payment.AmountForMeat?.ToString("+ 0.00 PLN") ?? ""}";
+        $"{payment.Amount:0 PLN} {payment.AmountForMeat?.ToString("+ 0 PLN") ?? ""}";
 
     public string When(Payment payment) => payment.CreatedAt.ToString("dd.MM.yyyy");
 

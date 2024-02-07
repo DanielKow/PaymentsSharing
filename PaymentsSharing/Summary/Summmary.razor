@@ -2,7 +2,16 @@
 @using PaymentsSharing.Time
 @inject SummaryViewModel ViewModel
 
-<MudText Typo="Typo.h1">Budget @MonthAndYear.Now</MudText>
-<br/>
-<MudText Typo="Typo.h2">Spent @ViewModel.Amount</MudText>
-<MudText Typo="Typo.h2">Spent for meat @ViewModel.AmountForMeat</MudText>
+<MudStack Spacing="3">
+    <MudText Typo="Typo.h1">Budget @MonthAndYear.Now</MudText>
+    
+    <MudText Typo="Typo.h2">Spent @ViewModel.Amount and @ViewModel.AmountForMeat for meat in total</MudText>
+    
+    <MudStack Spacing="2">
+        @foreach(string amountPerPerson in ViewModel.AmountsPerPerson())
+        {
+            <MudText Typo="Typo.h3">@amountPerPerson</MudText>
+        }
+    </MudStack>
+</MudStack>
+
