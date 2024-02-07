@@ -30,4 +30,10 @@ internal class Payments(IPublisher mediator)
                                           && payment.CreatedAt.Month == monthAndYear.Month
                                           && payment.CreatedAt.Year == monthAndYear.Year);
     }
+    
+    public IEnumerable<Payment> FromMonth(MonthAndYear monthAndYear)
+    {
+        return _payments.Where(payment => payment.CreatedAt.Month == monthAndYear.Month
+                                          && payment.CreatedAt.Year == monthAndYear.Year);
+    }
 }

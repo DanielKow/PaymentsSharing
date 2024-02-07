@@ -2,19 +2,18 @@ using System.Collections;
 using PaymentsSharing.Collections;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
+using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Refunds;
 
-internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
+internal class Refunds(Payments.Payments payments)
 {
-    private readonly List<Refund> _refunds = [];
-
-    public void Recalculate()
+    public IEnumerable<Refund> FromMonth(MonthAndYear monthAndYear)
     {
-        _refunds.Clear();
+        List<Refund> refunds = [];
         var refundsGraph = new RefundsGraph();
         
-        foreach (Payment payment in payments.FromCurrentMonth)
+        foreach (Payment payment in payments.FromMonth(monthAndYear))
         {
             string payer = string.Join('+', payment.Payers.Select(payer => payer.Name).OrderByDescending(name => name));
             foreach (Person consumer in payment.Consumers)
@@ -65,17 +64,9 @@ internal class Refunds(Payments.Payments payments) : IEnumerable<Refund>
         
         foreach (Refund refund in refundsGraph.Edges)
         {
-            _refunds.Add(refund.WithIntegerAmount());
+            refunds.Add(refund.WithIntegerAmount());
         }
-    }
-    
-    public IEnumerator<Refund> GetEnumerator()
-    {
-        return _refunds.GetEnumerator();
-    }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
+        return refunds;
     }
 }

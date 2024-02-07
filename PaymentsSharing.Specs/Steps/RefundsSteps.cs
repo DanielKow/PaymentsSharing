@@ -3,6 +3,7 @@ using NSubstitute;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;
 using PaymentsSharing.Refunds;
+using PaymentsSharing.Time;
 using TechTalk.SpecFlow;
 
 namespace PaymentsSharing.Specs.Steps;
@@ -13,6 +14,7 @@ public class RefundsSteps
     private readonly IPublisher _publisherMock = Substitute.For<IPublisher>();
     private readonly Payments.Payments _payments;
     private readonly Refunds.Refunds _refunds;
+    private IEnumerable<Refund> _currentRefunds = [];
 
     private readonly IEnumerable<Person> _persons =
     [
@@ -65,12 +67,12 @@ public class RefundsSteps
     [When("refund is recalculated")]
     public void WhenRefundIsRecalculated()
     {
-        _refunds.Recalculate();
+        _currentRefunds = _refunds.FromMonth(MonthAndYear.Now);
     }
 
     [Then(@"(.*) should return (\d+) PLN to (.*)")]
     public void ThenPersonShouldReturnPlnToAnotherPerson(string from, uint amount, string to)
     {
-        _refunds.Should().Contain(new Refund(from, to).WithAmount(amount));
+        _currentRefunds.Should().Contain(new Refund(from, to).WithAmount(amount));
     }
 }

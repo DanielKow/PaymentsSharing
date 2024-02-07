@@ -4,14 +4,14 @@
     <MudIconButton Icon="@Icons.Material.Filled.ArrowLeft" OnClick="ToPreviousMonth"/>
     <MudSpacer/>
     <MudText Typo="Typo.h2">
-        @MonthAndYearTitle
+        @MonthAndYear.ToString()
     </MudText>
     <MudSpacer/>
     <MudIconButton Icon="@Icons.Material.Filled.ArrowRight" OnClick="ToNextMonth" Disabled="!NextMonthIsAvailable"/>
 </MudStack>
 
 @code {
-    [Parameter] public MonthAndYear MonthAndYear { get; set; } = MonthAndYear.Now;
+    [Parameter] public MonthAndYear MonthAndYear { get; set; }
     
     [Parameter]
     public EventCallback<MonthAndYear> MonthAndYearChanged { get; set; }
@@ -30,5 +30,4 @@
 
     private bool NextMonthIsAvailable => MonthAndYear != MonthAndYear.Now;
     
-    private string MonthAndYearTitle => MonthAndYear.ToString();
 }

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Components;
 using PaymentsSharing.Persons;
 
@@ -7,15 +8,17 @@ internal class AddPaymentFormViewModel
 {
     private readonly CurrentPerson _currentPerson;
     private readonly Persons.Persons _persons;
-    
-    public AddPaymentFormViewModel(CurrentPerson currentPerson, Persons.Persons persons)
+    private readonly ISender _sender;
+
+    public AddPaymentFormViewModel(CurrentPerson currentPerson, Persons.Persons persons, ISender sender)
     {
         _currentPerson = currentPerson;
         _persons = persons;
+        _sender = sender;
         Payers = _currentPerson.IsSignedIn ? [_currentPerson.Person] : [];
         Consumers = _persons.Everyone;
     }
-    
+
     public IEnumerable<Person> Payers { get; set; }
     public IEnumerable<Person> Consumers { get; set; }
     public uint Amount { get; set; }
@@ -34,7 +37,7 @@ internal class AddPaymentFormViewModel
             Amount = amount;
         }
     }
-    
+
     public void UpdateAmountForMeat(ChangeEventArgs eventArgs)
     {
         if (uint.TryParse(eventArgs.Value?.ToString(), out uint amountForMeat))
@@ -42,17 +45,15 @@ internal class AddPaymentFormViewModel
             AmountForMeat = amountForMeat;
         }
     }
-    
-    public void Save()
+
+    public async Task Save()
     {
-        var payment = new Payment(
-            DateTime.UtcNow,
-            Payers.ToArray(),
-            Consumers.ToArray(),
+        await _sender.Send(new AddPayment(
+            Payers,
+            Consumers,
             Amount,
             AmountForMeat,
-            Description);
+            Description));
 
-        Console.WriteLine(payment);
     }
 }

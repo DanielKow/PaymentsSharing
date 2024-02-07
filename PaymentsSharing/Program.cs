@@ -53,6 +53,7 @@ async Task AddTestPayments()
     var persons = app.Services.GetRequiredService<Persons>();
 
     var mediator = app.Services.GetRequiredService<ISender>();
+    
     await mediator.Send(new AddPayment(
         persons.Everyone.Where(person => person.Name is "Natalia"),
         persons.Everyone,
