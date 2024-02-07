@@ -1,6 +1,7 @@
 using MediatR;
 using MudBlazor.Services;
 using PaymentsSharing;
+using PaymentsSharing.Components;
 using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
 using PaymentsSharing.Persons;

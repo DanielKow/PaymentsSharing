@@ -5,24 +5,10 @@ namespace PaymentsSharing.Payments;
 
 internal class PaymentsListViewModel(Payments payments, CurrentPerson currentPerson, Persons.Persons persons)
 {
+    public MonthAndYear MonthAndYear { get; set; } = MonthAndYear.Now;
+    
     public IEnumerable<Payment> Payments =>
-        payments.FromMonth(currentPerson.Person, _monthAndYear).OrderBy(payment => payment.CreatedAt);
-
-    private MonthAndYear _monthAndYear = MonthAndYear.Now;
-
-    public void ToPreviousMonth()
-    {
-        _monthAndYear = _monthAndYear.Previous;
-    }
-
-    public void ToNextMonth()
-    {
-        _monthAndYear = _monthAndYear.Next;
-    }
-
-    public bool NextMonthIsAvailable => _monthAndYear != MonthAndYear.Now;
-
-    public string MonthAndYearTitle => new DateTime(_monthAndYear.Year, _monthAndYear.Month, 1).ToString("MMMM yyyy");
+        payments.FromMonth(currentPerson.Person, MonthAndYear).OrderBy(payment => payment.CreatedAt);
 
     public string WhoPaid(Payment payment) =>
         string.Join(", ", payment.Payers.Select(person => person.Name));

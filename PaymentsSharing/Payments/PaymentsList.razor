@@ -2,20 +2,11 @@
 @inject PaymentsListViewModel ViewModel
 
 <MudStack Spacing="3">
-    <MudText Typo="Typo.h3">
+    <MudText Typo="Typo.h1">
         Payments
     </MudText>
     
-    <MudStack Row="true" Class="w-100" AlignItems="AlignItems.Center">
-        <MudIconButton Icon="@Icons.Material.Filled.ArrowLeft" OnClick="ViewModel.ToPreviousMonth"/>
-        <MudSpacer/>
-        <MudText Typo="Typo.h4">
-            @ViewModel.MonthAndYearTitle
-        </MudText>
-        <MudSpacer/>
-        <MudIconButton Icon="@Icons.Material.Filled.ArrowRight" OnClick="ViewModel.ToNextMonth" Disabled="!ViewModel.NextMonthIsAvailable"/>
-    </MudStack>
-
+    <MonthSelector @bind-MonthAndYear="ViewModel.MonthAndYear"/>
     
     <MudTable Items="@ViewModel.Payments" Hover="true">
         <HeaderContent>

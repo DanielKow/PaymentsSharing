@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace PaymentsSharing.Time;
 
-internal readonly record struct MonthAndYear
+public readonly record struct MonthAndYear
 {
     public MonthAndYear(int month, int year)
     {
@@ -21,9 +21,9 @@ internal readonly record struct MonthAndYear
         Year = dateTime.Year;
     }
 
-    public int Month { get; }
+    public int Month { get; } = DateTime.Now.Month;
 
-    public int Year { get; }
+    public int Year { get; } = DateTime.Now.Year;
 
     public static MonthAndYear Now => new(DateTime.Now);
     
