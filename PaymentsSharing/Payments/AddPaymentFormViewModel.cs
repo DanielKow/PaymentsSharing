@@ -9,12 +9,15 @@ internal class AddPaymentFormViewModel
     private readonly CurrentPerson _currentPerson;
     private readonly Persons.Persons _persons;
     private readonly ISender _sender;
+    private readonly NavigationManager _navigationManager;
 
-    public AddPaymentFormViewModel(CurrentPerson currentPerson, Persons.Persons persons, ISender sender)
+    public AddPaymentFormViewModel(CurrentPerson currentPerson, Persons.Persons persons, ISender sender,
+        NavigationManager navigationManager)
     {
         _currentPerson = currentPerson;
         _persons = persons;
         _sender = sender;
+        _navigationManager = navigationManager;
         Payers = _currentPerson.IsSignedIn ? [_currentPerson.Person] : [];
         Consumers = _persons.Everyone;
     }
@@ -30,20 +33,14 @@ internal class AddPaymentFormViewModel
     public string SelectedPayers => string.Join(", ", Payers.Select(payer => payer.Name));
     public string SelectedConsumers => string.Join(", ", Consumers.Select(consumer => consumer.Name));
 
-    public void UpdateAmount(ChangeEventArgs eventArgs)
+    public void UpdateAmount(uint amount)
     {
-        if (uint.TryParse(eventArgs.Value?.ToString(), out uint amount))
-        {
-            Amount = amount;
-        }
+        Amount = amount;
     }
 
-    public void UpdateAmountForMeat(ChangeEventArgs eventArgs)
+    public void UpdateAmountForMeat(uint? amountForMeat)
     {
-        if (uint.TryParse(eventArgs.Value?.ToString(), out uint amountForMeat))
-        {
-            AmountForMeat = amountForMeat;
-        }
+        AmountForMeat = amountForMeat;
     }
 
     public async Task Save()
@@ -55,5 +52,6 @@ internal class AddPaymentFormViewModel
             AmountForMeat,
             Description));
 
+        _navigationManager.NavigateTo("/");
     }
 }
