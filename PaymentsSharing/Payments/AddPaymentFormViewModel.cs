@@ -33,16 +33,6 @@ internal class AddPaymentFormViewModel
     public string SelectedPayers => string.Join(", ", Payers.Select(payer => payer.Name));
     public string SelectedConsumers => string.Join(", ", Consumers.Select(consumer => consumer.Name));
 
-    public void UpdateAmount(uint amount)
-    {
-        Amount = amount;
-    }
-
-    public void UpdateAmountForMeat(uint? amountForMeat)
-    {
-        AmountForMeat = amountForMeat;
-    }
-
     public async Task Save()
     {
         await _sender.Send(new AddPayment(

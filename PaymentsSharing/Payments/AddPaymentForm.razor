@@ -4,10 +4,10 @@
 <MudStack Spacing="3">
     <MudText Typo="Typo.h3">Add payment</MudText>
     <MudForm>
-        <MudNumericField T="uint" Label="Amount" Format="0 PLN" ValueChanged="ViewModel.UpdateAmount"/>
+        <MudNumericField T="uint" Label="Amount" @bind-Value="@ViewModel.Amount"  />
         @if (ViewModel.IsCurrentPersonEatMeat)
         {
-            <MudNumericField T="uint?" Label="Amount for meat" Format="0 PLN" ValueChanged="ViewModel.UpdateAmountForMeat" />
+            <MudNumericField T="uint?" Label="Amount for meat" @bind-Value="@ViewModel.AmountForMeat" />
         }
         <MudSelect Label="Who paid?" MultiSelection="true" @bind-SelectedValues="ViewModel.Payers" MultiSelectionTextFunc="_ => ViewModel.SelectedPayers">
             @foreach (Person person in ViewModel.AllPersons)
