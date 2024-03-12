@@ -15,9 +15,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services
-    .AddEventStore()
     .AddMudServices()
-    .AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly))
+    .AddMediatR(config =>
+    {
+        config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    })
     .AddPayments()
     .AddPersons()
     .AddSignIn()
