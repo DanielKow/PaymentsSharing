@@ -2,14 +2,26 @@ namespace PaymentsSharing.SignIn;
 
 internal class Users
 {
-    private readonly List<User> _users = [
-        new User("Natalia", "test"),
-        new User("Mikołaj", "test"),
-        new User("Andrzej", "test")
-    ];
+    private readonly Dictionary<string, string> _users = new()
+    {
+        ["Natalia"] = "test",
+        ["Mikołaj"] = "test",
+        ["Andrzej"] = "test"
+    };
+    
+    
+    public void AddOrUpdate(User user)
+    {
+        _users[user.Name] = user.Password;
+    }
     
     public bool CheckCredentials(User user)
     {
-        return _users.Contains(user);
+        if (!_users.TryGetValue(user.Name, out string? password))
+        {
+            return false;
+        }
+        
+        return password == user.Password;
     }
 }

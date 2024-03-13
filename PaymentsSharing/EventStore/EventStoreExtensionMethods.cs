@@ -5,6 +5,7 @@ internal static class EventStoreExtensionMethods
     public static IServiceCollection AddEventStore(this IServiceCollection services)
     {
         services.AddScoped<IEventStore, AzureEventStore>();
+        services.AddScoped<EventsGetter>();
         return services;
     }
 }
