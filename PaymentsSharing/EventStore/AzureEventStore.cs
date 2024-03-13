@@ -1,20 +1,12 @@
-using System.Text;
 using System.Text.Json;
 using MediatR;
-using PaymentsSharing.Payments;
-using PaymentsSharing.Persons;
 
 namespace PaymentsSharing.EventStore;
 
-internal class EventsHandler<T>(EventsContext context): INotificationHandler<T> where T : INotification
+internal class AzureEventStore(EventsContext context) : IEventStore
 {
-    public async Task Handle(T @event, CancellationToken cancellationToken)
+    public async Task SaveEvent<T>(T @event, CancellationToken cancellationToken) where T : INotification
     {
-        if (@event is PersonSignedIn || @event is PaymentAdded)
-        {
-            return;
-        }
-        
         string eventJson = JsonSerializer.Serialize(@event);
 
         string? eventType = @event.GetType().AssemblyQualifiedName;
