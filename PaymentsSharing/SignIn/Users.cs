@@ -2,12 +2,7 @@ namespace PaymentsSharing.SignIn;
 
 internal class Users
 {
-    private readonly Dictionary<string, string> _users = new()
-    {
-        ["Natalia"] = "test",
-        ["Mikołaj"] = "test",
-        ["Andrzej"] = "test"
-    };
+    private readonly Dictionary<string, string> _users = [];
     
     
     public void AddOrUpdate(User user)
