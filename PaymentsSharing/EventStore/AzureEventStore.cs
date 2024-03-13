@@ -1,5 +1,6 @@
 using System.Text.Json;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsSharing.EventStore;
 
@@ -20,5 +21,12 @@ internal class AzureEventStore(EventsContext context) : IEventStore
 
         context.Events.Add(toStore);
         await context.SaveChangesAsync(cancellationToken);
+    }
+    
+    public async Task<IEnumerable<T?>> GetEvents<T>(CancellationToken cancellationToken = default) where T :INotification
+    {
+        List<Event> events = await context.Events.Where(row => row.Type == typeof(T).AssemblyQualifiedName).ToListAsync(cancellationToken);
+        
+        return events.Select(row => JsonSerializer.Deserialize<T>(row.Data)).AsEnumerable();
     }
 }

@@ -22,7 +22,8 @@ builder.Services
     .AddPersons()
     .AddSignIn()
     .AddSummary()
-    .AddRefunds();
+    .AddRefunds()
+    .AddEventStore();
 
 
 builder.Services.AddDbContext<EventsContext>(options =>
@@ -45,5 +46,30 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+using IServiceScope scope = app.Services.CreateScope();
+var eventStore = scope.ServiceProvider.GetRequiredService<IEventStore>();
+var payments = scope.ServiceProvider.GetRequiredService<Payments>();
+
+Console.WriteLine("Getting payments");
+IEnumerable<PaymentAdded?> events = await eventStore.GetEvents<PaymentAdded>();
+
+foreach (PaymentAdded? @event in events)
+{
+    if (@event is null)
+    {
+        continue;
+    }
+    
+    payments.Add(new Payment(
+        @event.CreatedAt,
+        @event.Payers,
+        @event.Consumers,
+        @event.Amount,
+        @event.AmountForMeat,
+        @event.Description));
+}
+
+Console.WriteLine("Got events");
 
 app.Run();
