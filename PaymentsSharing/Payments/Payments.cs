@@ -4,20 +4,13 @@ using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Payments;
 
-internal class Payments(IPublisher mediator)
+internal class Payments
 {
     private readonly List<Payment> _payments = [];
 
-    public async Task Add(Payment payment)
+    public void Add(Payment payment)
     {
         _payments.Add(payment);
-        await mediator.Publish(new PaymentAdded(
-            payment.CreatedAt,
-            payment.Payers,
-            payment.Consumers,
-            payment.Amount,
-            payment.AmountForMeat,
-            payment.Description));
     }
     
     public IEnumerable<Payment> All => _payments;

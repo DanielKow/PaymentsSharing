@@ -7,6 +7,6 @@ internal record PaymentAdded(
     DateTime CreatedAt,
     IEnumerable<Person> Payers,
     IEnumerable<Person> Consumers,
-    decimal Amount,
-    decimal? AmountForMeat = null,
+    uint Amount,
+    uint? AmountForMeat = null,
     string Description = "") : INotification;
