@@ -17,5 +17,9 @@ internal class AddPaymentFromDateFormViewModel(ISender sender)
             Amount,
             AmountForMeat,
             Description));
+        
+        Amount = 0;
+        AmountForMeat = 0;
+        Description = string.Empty;
     }
 }
