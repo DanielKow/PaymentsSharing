@@ -25,6 +25,7 @@
       <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
       <_ContentIncludedByDefault Remove="Persons\SignedInPerson.razor" />
       <_ContentIncludedByDefault Remove="SignIn\SignInForm.razor" />
+      <_ContentIncludedByDefault Remove="Charts\MonthlyChart.razor" />
     </ItemGroup>
 
     <ItemGroup>

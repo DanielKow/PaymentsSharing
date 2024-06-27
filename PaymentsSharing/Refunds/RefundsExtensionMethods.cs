@@ -5,7 +5,7 @@ public static class RefundsExtensionMethods
     public static IServiceCollection AddRefunds(this IServiceCollection services)
     {
         services.AddSingleton<Refunds>();
-        services.AddTransient<RefundsTableViewModel>();
+        services.AddTransient<RefundsListViewModel>();
         return services;
     }
 }
