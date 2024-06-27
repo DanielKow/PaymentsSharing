@@ -23,7 +23,7 @@ internal class EventsGetter(IEventStore eventStore, Payments.Payments payments)
             }
     
             payments.Add(new Payment(
-                @event.CreatedAt,
+                @event.Date,
                 @event.Amount,
                 @event.AmountForMeat,
                 @event.Description));

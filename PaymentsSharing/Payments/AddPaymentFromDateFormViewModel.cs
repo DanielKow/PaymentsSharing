@@ -3,16 +3,17 @@ using Microsoft.AspNetCore.Components;
 
 namespace PaymentsSharing.Payments;
 
-internal class AddPaymentFormViewModel(ISender sender, NavigationManager navigationManager)
+internal class AddPaymentFromDateFormViewModel(ISender sender, NavigationManager navigationManager)
 {
     public uint Amount { get; set; }
     public uint? AmountForMeat { get; set; }
+    public DateTime? Date { get; set; } = DateTime.Now;
     public string Description { get; set; } = "";
 
     public async Task Save()
     {
         await sender.Send(new AddPayment(
-            DateTime.Now,
+            Date ?? DateTime.Now,
             Amount,
             AmountForMeat,
             Description));

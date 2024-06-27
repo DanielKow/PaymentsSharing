@@ -1,0 +1,13 @@
+@page "/AddPaymentFromDate"
+@inject AddPaymentFromDateFormViewModel ViewModel
+
+<MudStack Spacing="3">
+    <MudText Typo="Typo.h2">Add payment</MudText>
+    <MudForm>
+        <MudDatePicker @bind-Date="@ViewModel.Date"/>
+        <MudNumericField T="uint" Label="Amount" @bind-Value="@ViewModel.Amount" Step="10"/>
+        <MudNumericField T="uint?" Label="Amount for meat" @bind-Value="@ViewModel.AmountForMeat" Step="10"/>
+        <MudTextField Label="Description" @bind-Value="ViewModel.Description"/>
+    </MudForm>
+    <MudButton OnClick="ViewModel.Save">Save</MudButton>
+</MudStack>

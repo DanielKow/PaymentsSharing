@@ -8,7 +8,7 @@ internal class PaymentAddedHandler(Payments payments, IEventStore eventStore) : 
     public Task Handle(PaymentAdded @event, CancellationToken cancellationToken)
     { 
         payments.Add(new Payment(
-            @event.CreatedAt,
+            @event.Date,
             @event.Amount,
             @event.AmountForMeat,
             @event.Description));

@@ -14,7 +14,7 @@ internal class AddPaymentHandler(IPublisher publisher) : IRequestHandler<AddPaym
 
         await publisher.Publish(
             new PaymentAdded(
-                DateTime.Now,
+                command.Date,
                 command.Amount,
                 command.AmountForMeat,
                 command.Description), cancellationToken);
