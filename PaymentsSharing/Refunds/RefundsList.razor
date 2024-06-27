@@ -2,12 +2,12 @@
 @using PaymentsSharing.Time
 @inject RefundsTableViewModel ViewModel
 
-<MudText Typo="Typo.h2">Refunds @MonthAndYear.Now</MudText>
-<MonthSelector @bind-MonthAndYear="ViewModel.MonthAndYear"/>
-
-@foreach (Refund refund in ViewModel.Refunds)
-{
-    <MudText Typo="Typo.h3">@refund.From should return @refund.Amount to @refund.To</MudText>
-}
-
-
+<MudStack>
+    <MudText Typo="Typo.h2">Refunds @MonthAndYear.Now</MudText>
+    <MonthSelector @bind-MonthAndYear="ViewModel.MonthAndYear"/>
+    <MudDivider/>
+    @foreach (Refund refund in ViewModel.Refunds)
+    {
+        <MudText Typo="Typo.h4">@refund.From should return @refund.Amount to @refund.To</MudText>
+    }
+</MudStack>
