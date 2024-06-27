@@ -31,4 +31,5 @@ public readonly record struct MonthAndYear
     public MonthAndYear Next => Month == 12 ? new MonthAndYear(1, Year + 1) : new MonthAndYear(Month + 1, Year);
     
     public override string ToString() => $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Month)} {Year}";
+    public string ToShortString() => $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month)} {Year.ToString().Substring(2, 2)}";
 }

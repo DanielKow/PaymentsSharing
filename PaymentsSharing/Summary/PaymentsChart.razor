@@ -1,0 +1,6 @@
+@inject PaymentsChartViewModel ViewModel
+
+<MudStack Spacing="0">
+    <MudText Typo="Typo.h3">Payments per month</MudText>
+    <MudChart ChartType="ChartType.Bar" ChartSeries="@ViewModel.Series.ToList()" XAxisLabels="@ViewModel.XAxisLabels.ToArray()" Width="100%" />
+</MudStack>
