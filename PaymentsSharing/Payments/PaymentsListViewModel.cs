@@ -16,7 +16,7 @@ internal class PaymentsListViewModel(Payments payments, ISender sender, IDialogS
     public string HowMuch(Payment payment) =>
         $"{payment.Amount:0 PLN} {payment.AmountForMeat?.ToString("+ 0 PLN") ?? ""}";
 
-    public string When(Payment payment) => payment.CreatedAt.ToString("dd.MM.yyyy");
+    public string When(Payment payment) => payment.CreatedAt.ToString("dd.MM.yy");
 
     public string ForWhat(Payment payment) => payment.Description;
 
