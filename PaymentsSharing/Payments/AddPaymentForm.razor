@@ -2,10 +2,10 @@
 @inject AddPaymentFormViewModel ViewModel
 
 <MudStack Spacing="3">
-    <MudText Typo="Typo.h3">Add payment</MudText>
+    <MudText Typo="Typo.h2">Add payment</MudText>
     <MudForm>
-        <MudNumericField T="uint" Label="Amount" @bind-Value="@ViewModel.Amount"  />
-        <MudNumericField T="uint?" Label="Amount for meat" @bind-Value="@ViewModel.AmountForMeat" />
+        <MudNumericField T="uint" Label="Amount" @bind-Value="@ViewModel.Amount" Step="10" />
+        <MudNumericField T="uint?" Label="Amount for meat" @bind-Value="@ViewModel.AmountForMeat" Step="10"/>
         <MudTextField Label="Description" @bind-Value="ViewModel.Description"/>
     </MudForm>
     <MudButton OnClick="ViewModel.Save">Save</MudButton>
