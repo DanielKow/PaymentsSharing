@@ -12,8 +12,6 @@ internal class Payments
         _payments.Add(payment);
     }
     
-    public IEnumerable<Payment> All => _payments;
-    
     public IEnumerable<Payment> FromCurrentMonth => _payments.Where(payment => payment.CreatedAt.Month == DateTime.Now.Month && payment.CreatedAt.Year == DateTime.Now.Year);
     
     public IEnumerable<Payment> FromMonth(MonthAndYear monthAndYear)
