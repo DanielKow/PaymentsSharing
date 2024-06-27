@@ -13,9 +13,9 @@ internal class EventsGetter(IEventStore eventStore, Payments.Payments payments)
     {
         Console.WriteLine("Getting payments");
 
-        IEnumerable<PaymentAdded?> events = await eventStore.GetEvents<PaymentAdded>();
+        IEnumerable<PaymentAdded?> added = await eventStore.GetEvents<PaymentAdded>();
 
-        foreach (PaymentAdded? @event in events)
+        foreach (PaymentAdded? @event in added)
         {
             if (@event is null)
             {
@@ -27,6 +27,18 @@ internal class EventsGetter(IEventStore eventStore, Payments.Payments payments)
                 @event.Amount,
                 @event.AmountForMeat,
                 @event.Description));
+        }
+        
+        IEnumerable<PaymentRemoved?> removed = await eventStore.GetEvents<PaymentRemoved>();
+        
+        foreach (PaymentRemoved? @event in removed)
+        {
+            if (@event is null)
+            {
+                continue;
+            }
+    
+            payments.Remove(@event.Payment);
         }
         
         Console.WriteLine("Got payments");
