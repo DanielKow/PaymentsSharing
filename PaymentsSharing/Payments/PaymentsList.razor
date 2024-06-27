@@ -5,15 +5,16 @@
     <MudText Typo="Typo.h2">
         Payments
     </MudText>
-    
+
     <MonthSelector @bind-MonthAndYear="ViewModel.MonthAndYear"/>
-    
+
     <MudSimpleTable>
         <thead>
         <tr>
             <th>When?</th>
             <th>How much?</th>
             <th>For what?</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,9 @@
                 <td>@ViewModel.When(payment)</td>
                 <td>@ViewModel.HowMuch(payment)</td>
                 <td>@ViewModel.ForWhat(payment)</td>
+                <td>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@(() => ViewModel.RemovePayment(payment))"/>
+                </td>
             </tr>
         }
         <tr>

@@ -1,8 +1,9 @@
+using MediatR;
 using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Payments;
 
-internal class PaymentsListViewModel(Payments payments)
+internal class PaymentsListViewModel(Payments payments, ISender sender)
 {
     public MonthAndYear MonthAndYear { get; set; } = MonthAndYear.Now;
     
@@ -17,5 +18,10 @@ internal class PaymentsListViewModel(Payments payments)
     public string When(Payment payment) => payment.CreatedAt.ToString("dd.MM.yyyy");
 
     public string ForWhat(Payment payment) => payment.Description;
+
+    public Task RemovePayment(Payment payment)
+    {
+        return sender.Send(new RemovePayment(payment));
+    }
 
 }
