@@ -1,9 +1,10 @@
 using MediatR;
+using MudBlazor;
 using PaymentsSharing.Time;
 
 namespace PaymentsSharing.Payments;
 
-internal class PaymentsListViewModel(Payments payments, ISender sender)
+internal class PaymentsListViewModel(Payments payments, ISender sender, IDialogService dialogService)
 {
     public MonthAndYear MonthAndYear { get; set; } = MonthAndYear.Now;
     
@@ -19,9 +20,15 @@ internal class PaymentsListViewModel(Payments payments, ISender sender)
 
     public string ForWhat(Payment payment) => payment.Description;
 
-    public Task RemovePayment(Payment payment)
+    public async Task RemovePayment(Payment payment)
     {
-        return sender.Send(new RemovePayment(payment));
-    }
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        IDialogReference? dialog = await dialogService.ShowAsync<RemovePaymentDialog>("Confirm payment removal", options);
+        DialogResult? result = await dialog.Result;
 
+        if (!result.Canceled)
+        {
+            await sender.Send(new RemovePayment(payment));
+        }
+    }
 }
