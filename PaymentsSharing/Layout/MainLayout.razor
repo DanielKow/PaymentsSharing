@@ -1,45 +1,48 @@
 ﻿@inherits LayoutComponentBase
-@inject CurrentPerson CurrentPerson
 
-<MudThemeProvider Theme="@_theme"/>
+<MudThemeProvider Theme="@_theme" @bind-IsDarkMode="_isDarkMode"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
-    @if (CurrentPerson.IsSignedIn)
-    {
-        <MudAppBar>
-            <AppBar @bind-DrawerOpen="_drawerOpen"></AppBar>
-        </MudAppBar>
-        <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Docked">
-            <NavMenu/>
-        </MudDrawer>
-        <MudMainContent>
-            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
-                @Body
-            </MudContainer>
-        </MudMainContent>
-    }
-    else
-    {
+    <MudAppBar>
+        <MudToggleIconButton @bind-Toggled="@_drawerOpen"
+                             Icon="@Icons.Material.Filled.Menu"
+                             ToggledIcon="@Icons.Material.Filled.Close"
+                             Color="Color.Inherit"
+                             ToggledColor="Color.Inherit"/>
+        <MudSpacer/>
+        <MudText Typo="Typo.h1">Payments sharing</MudText>
+        <MudSpacer/>
+        <MudToggleIconButton @bind-Toggled="@_isDarkMode" 
+                             Icon="@Icons.Material.Filled.WbSunny"
+                             ToggledIcon="@Icons.Material.Filled.Nightlight"
+                             Color="Color.Inherit"
+                             ToggledColor="Color.Inherit"/>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Docked">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
-            <SignInForm/>
+            @Body
         </MudContainer>
-    }
+    </MudMainContent>
 </MudLayout>
 
 @code {
     private bool _drawerOpen;
+    private bool _isDarkMode;
 
     private readonly MudTheme _theme = new()
     {
         Typography = new Typography
         {
-            H1 = new H1 { FontSize = "2.5rem"},
+            H1 = new H1 { FontSize = "2.5rem" },
             H2 = new H2 { FontSize = "2rem", },
             H3 = new H3 { FontSize = "1.75rem" },
             H4 = new H4 { FontSize = "1.5rem" },
-            H5 = new H5 { FontSize = "1.25rem"},
+            H5 = new H5 { FontSize = "1.25rem" },
             H6 = new H6 { FontSize = "1rem" },
         }
     };

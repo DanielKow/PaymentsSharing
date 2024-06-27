@@ -4,9 +4,7 @@ using MudBlazor.Services;
 using PaymentsSharing;
 using PaymentsSharing.EventStore;
 using PaymentsSharing.Payments;
-using PaymentsSharing.Persons;
 using PaymentsSharing.Refunds;
-using PaymentsSharing.SignIn;
 using PaymentsSharing.Summary;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -19,15 +17,13 @@ builder.Services
     .AddMudServices()
     .AddMediatR(config => { config.RegisterServicesFromAssembly(typeof(Program).Assembly); })
     .AddPayments()
-    .AddPersons()
-    .AddSignIn()
     .AddSummary()
     .AddRefunds()
     .AddEventStore();
 
 
 builder.Services.AddDbContext<EventsContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 WebApplication app = builder.Build();
 
@@ -49,6 +45,8 @@ app.MapRazorComponents<App>()
 
 using IServiceScope scope = app.Services.CreateScope();
 var eventsGetter = scope.ServiceProvider.GetRequiredService<EventsGetter>();
+var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+
 await eventsGetter.GetEvents();
 
 app.Run();

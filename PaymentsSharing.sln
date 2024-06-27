@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsSharing", "PaymentsSharing\PaymentsSharing.csproj", "{CBAF17DB-1905-4EDD-B142-1AABF199A040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsSharing.Specs", "PaymentsSharing.Specs\PaymentsSharing.Specs.csproj", "{446BF06F-19C4-45D3-B257-F89AB58F7126}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{CBAF17DB-1905-4EDD-B142-1AABF199A040}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBAF17DB-1905-4EDD-B142-1AABF199A040}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBAF17DB-1905-4EDD-B142-1AABF199A040}.Release|Any CPU.Build.0 = Release|Any CPU
-		{446BF06F-19C4-45D3-B257-F89AB58F7126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{446BF06F-19C4-45D3-B257-F89AB58F7126}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{446BF06F-19C4-45D3-B257-F89AB58F7126}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{446BF06F-19C4-45D3-B257-F89AB58F7126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

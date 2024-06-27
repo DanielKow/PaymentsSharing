@@ -10,15 +10,11 @@
     
     <MudTable Items="@ViewModel.Payments" Hover="true">
         <HeaderContent>
-            <MudTh>Who paid?</MudTh>
-            <MudTh>Who consumed?</MudTh>
             <MudTh>How much?</MudTh>
             <MudTh>When?</MudTh>
             <MudTh>For what?</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Who paid?">@ViewModel.WhoPaid(context)</MudTd>
-            <MudTd DataLabel="Who consumed?">@ViewModel.WhoConsumed(context)</MudTd>
             <MudTd DataLabel="How much?">@ViewModel.HowMuch(context)</MudTd>
             <MudTd DataLabel="When?">@ViewModel.When(context)</MudTd>
             <MudTd DataLabel="For what?">@ViewModel.ForWhat(context)</MudTd>

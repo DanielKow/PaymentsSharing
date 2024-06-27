@@ -10,19 +10,21 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="12.2.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
       <PackageReference Include="MudBlazor" Version="6.17.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Users\SignedInUserInfo.razor" />
       <_ContentIncludedByDefault Remove="Users\SignInForm.razor" />
       <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Persons\SignedInPerson.razor" />
+      <_ContentIncludedByDefault Remove="SignIn\SignInForm.razor" />
     </ItemGroup>
 
     <ItemGroup>
