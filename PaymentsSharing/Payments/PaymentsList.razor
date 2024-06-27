@@ -8,16 +8,28 @@
     
     <MonthSelector @bind-MonthAndYear="ViewModel.MonthAndYear"/>
     
-    <MudTable Items="@ViewModel.Payments" Hover="true">
-        <HeaderContent>
-            <MudTh>How much?</MudTh>
-            <MudTh>When?</MudTh>
-            <MudTh>For what?</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="How much?">@ViewModel.HowMuch(context)</MudTd>
-            <MudTd DataLabel="When?">@ViewModel.When(context)</MudTd>
-            <MudTd DataLabel="For what?">@ViewModel.ForWhat(context)</MudTd>
-        </RowTemplate>
-    </MudTable>
+    <MudSimpleTable>
+        <thead>
+        <tr>
+            <th>When?</th>
+            <th>How much?</th>
+            <th>For what?</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Payment payment in ViewModel.Payments)
+        {
+            <tr>
+                <td>@ViewModel.When(payment)</td>
+                <td>@ViewModel.HowMuch(payment)</td>
+                <td>@ViewModel.ForWhat(payment)</td>
+            </tr>
+        }
+        <tr>
+            <td>Sum:</td>
+            <td>@ViewModel.Total</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </MudSimpleTable>
 </MudStack>
