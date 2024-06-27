@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,5 +23,11 @@
       <_ContentIncludedByDefault Remove="Users\SignedInUserInfo.razor" />
       <_ContentIncludedByDefault Remove="Users\SignInForm.razor" />
       <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 </Project>

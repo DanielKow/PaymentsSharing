@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsSharing.EventStore;
 
-internal class AzureEventStore(EventsContext context) : IEventStore
+internal class DatabaseEventStore(EventsContext context) : IEventStore
 {
     public async Task SaveEvent<T>(T @event, CancellationToken cancellationToken) where T : INotification
     {
