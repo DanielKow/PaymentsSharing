@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace PaymentsSharing.Payments;
 
-internal class AddPaymentFromDateFormViewModel(ISender sender, NavigationManager navigationManager)
+internal class AddPaymentFromDateFormViewModel(ISender sender)
 {
     public uint Amount { get; set; }
     public uint? AmountForMeat { get; set; }
@@ -17,7 +17,5 @@ internal class AddPaymentFromDateFormViewModel(ISender sender, NavigationManager
             Amount,
             AmountForMeat,
             Description));
-
-        navigationManager.NavigateTo("/");
     }
 }
