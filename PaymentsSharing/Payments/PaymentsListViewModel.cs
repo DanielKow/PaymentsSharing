@@ -10,6 +10,8 @@ internal class PaymentsListViewModel(Payments payments, ISender sender, IDialogS
     
     public IEnumerable<Payment> Payments =>
         payments.FromMonth(MonthAndYear).OrderBy(payment => payment.CreatedAt);
+    
+    public string ForWhatClass => Payments.All(payment => string.IsNullOrEmpty(payment.Description)) ? "d-none" : "d-table-cell";
 
     public string Total => Payments.Sum(payment => payment.Amount + (payment.AmountForMeat ?? 0)).ToString("0 PLN");
 

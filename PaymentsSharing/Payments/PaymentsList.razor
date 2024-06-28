@@ -11,9 +11,9 @@
     <MudSimpleTable>
         <thead>
         <tr>
-            <th>When?</th>
+            <th class="d-none d-sm-table-cell">When?</th>
             <th>How much?</th>
-            <th class="d-none d-sm-table-cell">For what?</th>
+            <th class="@ViewModel.ForWhatClass">For what?</th>
             <th>Remove</th>
         </tr>
         </thead>
@@ -21,7 +21,7 @@
         @foreach (Payment payment in ViewModel.Payments)
         {
             <tr>
-                <td>@ViewModel.When(payment)</td>
+                <td class="d-none d-sm-table-cell">@ViewModel.When(payment)</td>
                 <td>
                     @if (payment.Amount > 0)
                     {
@@ -36,7 +36,7 @@
                         @payment.AmountForMeat?.ToString("[M] 0 PLN")
                     }
                 </td>
-                <td class="d-none d-sm-table-cell">@ViewModel.ForWhat(payment)</td>
+                <td class="@ViewModel.ForWhatClass">@ViewModel.ForWhat(payment)</td>
                 <td>
                     <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@(() => ViewModel.RemovePayment(payment))"/>
                 </td>
