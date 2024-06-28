@@ -13,7 +13,7 @@
         <tr>
             <th>When?</th>
             <th>How much?</th>
-            <th>For what?</th>
+            <th class="d-none d-sm-table-cell">For what?</th>
             <th>Remove</th>
         </tr>
         </thead>
@@ -22,8 +22,21 @@
         {
             <tr>
                 <td>@ViewModel.When(payment)</td>
-                <td>@ViewModel.HowMuch(payment)</td>
-                <td>@ViewModel.ForWhat(payment)</td>
+                <td>
+                    @if (payment.Amount > 0)
+                    {
+                        @payment.Amount.ToString("0 PLN")
+                    }
+                    @if (payment.AmountForMeat > 0)
+                    {
+                        if (payment.Amount > 0)
+                        {
+                            <br/>
+                        }
+                        @payment.AmountForMeat?.ToString("[M] 0 PLN")
+                    }
+                </td>
+                <td class="d-none d-sm-table-cell">@ViewModel.ForWhat(payment)</td>
                 <td>
                     <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@(() => ViewModel.RemovePayment(payment))"/>
                 </td>
@@ -32,7 +45,6 @@
         <tr>
             <td>Sum:</td>
             <td>@ViewModel.Total</td>
-            <td></td>
         </tr>
         </tbody>
     </MudSimpleTable>
