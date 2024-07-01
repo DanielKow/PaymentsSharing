@@ -44,6 +44,10 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 using IServiceScope scope = app.Services.CreateScope();
+
+var database = scope.ServiceProvider.GetRequiredService<EventsContext>();
+await database.Database.MigrateAsync();
+
 var eventsGetter = scope.ServiceProvider.GetRequiredService<EventsGetter>();
 var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
